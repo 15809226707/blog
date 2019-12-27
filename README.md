@@ -4,4 +4,4 @@
 
 ### | JS
 
-* [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/js原生ajax请求利用promise封装函数.md) 
+* [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/使用promise封装原生ajax函数.md) 
