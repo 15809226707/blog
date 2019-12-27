@@ -5,7 +5,7 @@ function login(){
     var ps = window.btoa('CloudEmperor='+ value)
     if (ps === 'Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ=='){ 
         sessionStorage.setItem("CLOUDEMPEROR_TOKEN", "Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ==");
-        window.location.href = 'https://github.com/CloudEmperor/blog/blob/master/views/curriculumVitae/index.html'
+        window.location.href = 'https://cloudemperor.github.io/blog/views/curriculumVitae/index.html'
     }else{
         alert('密码输入有误')
     }
