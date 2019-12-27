@@ -7,6 +7,9 @@ html,body {
     box-sizing: border-box;
     font-family: Microsoft YaHei, sans-serif, Arial, Helvetica Neue, Helvetica, Heiti;
 }
+body{
+    background: linear-gradient(45deg,rgba(49, 195, 201, 0.5),rgba(121, 163, 208, 0.5),rgba(69, 85, 209, 0.5));
+}
 .login{
     height:100%;
     width:100%;
