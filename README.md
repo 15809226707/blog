@@ -1,7 +1,6 @@
-# CloudEmperor's blog
+# [CloudEmperor's blog](https://CloudEmperor.github.io/blog) 
 
-[blog地址](https://CloudEmperor.github.io/blog) 
 
-### | JS
+## | js
 
 * [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/使用promise封装原生ajax函数.md) 
