@@ -2,16 +2,26 @@
 
 
 ---
+## 目录
 
-## | Js
-
-* :book: [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/使用promise封装原生ajax函数.md) 
+1. **[Js](#1-Js)**
+2. **[Components](#2-Components)**
 
 ---
 
-## | Components
+## 1. Js
+
+* :book: [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/使用promise封装原生ajax函数.md) 
+
+**[:arrow_up: 返回目录](#目录)**
+
+---
+
+## 2. Components
 
 * :book: [Vue Components](https://github.com/CloudEmperor/blog/blob/master/components/vue/components.md)
 
+
+**[:arrow_up: 返回目录](#目录)**
 
 ---
