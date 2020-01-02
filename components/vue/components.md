@@ -76,8 +76,9 @@
 >```
 >效果：
 >
-> ![](images/wangEditor.jpg)
-><img src="images/wangEditor.jpg" width="100%" height="200px"/>
+> ![](./images/wangEditor.jpg)
+> 分开
+><img src="./images/wangEditor.jpg" width="100%" height="200px"/>
 >
 >
 >
