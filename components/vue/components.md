@@ -8,7 +8,8 @@
 
 * ### [DivInput.vue](https://github.com/CloudEmperor/blog/blob/master/components/vue/pc/DivInput.vue)
 >
-> div标签通过contenteditable属性，模仿input输入框，实现数据双向绑定。
+> 项目中经常会遇到一些需求，需要input输入框的功能，但不需要他自带的样式。<br>
+> 我们可以通过div标签的contenteditable属性，模仿input输入框，实现数据双向绑定，样式随意设置。
 >
 > 组件使用：
 >
@@ -74,12 +75,6 @@
 >   }
 ></script>
 >```
->效果图点击查看：
->
-> ![wangeditor效果图](images/wangEditor.jpg)
-> 
->
->
 >
 >
 
