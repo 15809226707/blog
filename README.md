@@ -11,8 +11,8 @@
 
 ## 1. Js
 
-* :book: [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/使用promise封装原生ajax函数.md) 
-* :book: [js浮点数计算加减乘除精度损失解决方法](https://github.com/CloudEmperor/blog/blob/master/markdown/js/js浮点数计算加减乘除精度损失解决方法.md) 
+* :book: [使用promise封装原生ajax函数](https://github.com/CloudEmperor/blog/blob/master/markdown/js/ajaxPromise.md) 
+* :book: [js浮点数计算加减乘除精度损失解决方法](https://github.com/CloudEmperor/blog/blob/master/markdown/js/floatCalculation.md) 
 
 **[:arrow_up: 返回目录](#目录)**
 
