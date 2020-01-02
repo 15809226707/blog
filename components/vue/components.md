@@ -76,9 +76,9 @@
 >```
 >效果：
 >
->![](https://github.com/CloudEmperor/blog/blob/master/components/vue/images/wangEditor.jpg)
+> ![](images/wangEditor.jpg)
 ><img src="images/wangEditor.jpg" width="100%" height="200px"/>
-><img src="https://github.com/CloudEmperor/blog/blob/master/components/vue/images/wangEditor.jpg" width="100%" height="200px"/>
+>
 >
 >
 
