@@ -74,11 +74,11 @@
 >   }
 ></script>
 >```
->效果：
+>效果图点击查看：
 >
-> ![](./images/wangEditor.jpg)
-> 分开
-><img src="./images/wangEditor.jpg" width="100%" height="200px"/>
+> ![wangeditor效果图](images/wangEditor.jpg)
+> 
+>
 >
 >
 >
