@@ -79,7 +79,13 @@ var floatObj = function() {
     }
 }();
 
+
+
+```
+```javascript
+
 /*调用方式*/
+
  floatObj.add(0.11, 0.03)
 
 ```
