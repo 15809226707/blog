@@ -37,7 +37,7 @@
 
 * ### [Editor.vue](https://github.com/CloudEmperor/blog/blob/master/components/vue/pc/Editor.vue)
 >
-> wangEditor —— 轻量级 web 富文本编辑器，配置方便，使用简单。支持 IE10+ 浏览器。
+> wangEditor —— 轻量级 web 富文本编辑器，配置方便，使用简单。支持 IE10+ 浏览器。<br>
 > 为了方便项目中使用，特将wangEditor封装成组件。
 >
 > - 官网：[www.wangEditor.com](www.wangEditor.com)
@@ -76,8 +76,9 @@
 >```
 >效果：
 >
+>![](https://github.com/CloudEmperor/blog/blob/master/components/vue/images/wangEditor.jpg)
 ><img src="images/wangEditor.jpg" width="100%" height="200px"/>
->
+><img src="https://github.com/CloudEmperor/blog/blob/master/components/vue/images/wangEditor.jpg" width="100%" height="200px"/>
 >
 >
 
