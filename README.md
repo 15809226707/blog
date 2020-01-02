@@ -21,7 +21,7 @@
 ## 2. Components
 
 * :book: [Vue Components](https://github.com/CloudEmperor/blog/blob/master/components/vue/components.md)
-
+* :book: [React Components](https://github.com/CloudEmperor/blog/blob/master/components/react/components.md)
 
 **[:arrow_up: 返回目录](#目录)**
 

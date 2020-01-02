@@ -1,6 +1,42 @@
  # Vue Components
 
 
+## PC-Mobile项目公用组件封装
+
+---
+
+* ### [SvgIcon](https://github.com/CloudEmperor/blog/blob/master/components/vue/public/SvgIcon.vue)
+>
+> 针对Svg格式的Icon组件封装，使用时入口index.html文件引入Svg地址。
+> 
+>
+>
+>
+> ```javascript
+> <template>
+>
+>  <SvgIcon icon-class="icondatixitongguanli" size="20px"></SvgIcon>
+>
+> </template>
+>
+><script>
+>    import SvgIcon from '@/components/SvgIcon'
+>    export default {
+>       components: { SvgIcon},
+>        data() {
+>            return {
+>            
+>            }
+>        }
+>   }
+></script>
+>``
+>
+>
+
+
+---
+
 
 ## PC端-项目中常用组件封装
 
