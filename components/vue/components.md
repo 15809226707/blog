@@ -5,7 +5,7 @@
 
 ---
 
-* ### [SvgIcon](https://github.com/CloudEmperor/blog/blob/master/components/vue/public/SvgIcon.vue)
+* ### [SvgIcon.vue](https://github.com/CloudEmperor/blog/blob/master/components/vue/public/SvgIcon.vue)
 >
 > 针对Svg格式的Icon组件封装，使用时入口index.html文件引入Svg地址。
 > 
