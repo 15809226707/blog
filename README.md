@@ -40,7 +40,7 @@
 
 ## 4. Utils工具类函数封装
 
-* :book: [Axio二次封装函数](https://github.com/CloudEmperor/blog/blob/master/utils/axios/axios.md)
+* :book: [Axios二次封装函数](https://github.com/CloudEmperor/blog/blob/master/utils/axios/axios.md)
 * :book: [时间戳转换函数封装](https://github.com/CloudEmperor/blog/blob/master/utils/formatDate/formatDate.md)
 
 **[:arrow_up: 返回目录](#目录)**
