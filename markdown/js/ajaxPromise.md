@@ -41,12 +41,21 @@
 		});
 	
 	};
+
+
+
+```
+
+```javascript
+
 	/*使用方法*/
+
 	var obj={
 	access_token:'3452d32463e1b36ad94ee56931ea3cf0',
 	pageNumber:1,
 	pageSize:20
 	}
+	
 	var url='https://denterpriseapi.coolcollege.cn/course/queryCourseByPage'
 
 	//开始调用接口
@@ -55,6 +64,5 @@
 	}).catch(function(err){
 		console.log(err)
 	})
-
 
 ```
