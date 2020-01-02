@@ -124,7 +124,7 @@
 
 * ### [Calendar.vue](https://blog.csdn.net/weixin_38008863/article/details/90409612)
 >
-> vue移动端日历组件封装
+> vue移动端日历组件封装(类似安卓原生日历风格)
 >
 >
 
