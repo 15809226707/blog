@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="shortcut icon" href="images/favicon.ico" />
     <title>Image Watermarking</title>
     <style>
         *{
@@ -181,7 +182,8 @@
                 </a>
                 <p><label>水印文字</label><input type="text" onchange="inputChange(this, 'addText')" placeholder="请设置水印文字内容" /></p>
                 <p><label>文字颜色</label><input type="text" onchange="inputChange(this, 'addTextColor')" placeholder="请设置字体颜色,默认red" /></p>
-                <p><label>文字字号字体</label><input type="text" onchange="inputChange(this, 'addTextSize')" placeholder="请设置字体设置,默认35px 微软雅黑" /></p>
+                <p><label>文字字体</label><input type="text" onchange="inputChange(this, 'addTextFamily')" placeholder="请设置字体,默认微软雅黑" /></p>
+                <p><label>文字大小</label><input type="number" onchange="inputChange(this, 'addTextSize')" placeholder="请设置文字大小,默认35" /></p>
                 <p><label>水印文字X坐标</label><input type="number" onchange="inputChange(this, 'textX')" placeholder="请设置X坐标,默认500" /></p>
                 <p><label>水印文字Y坐标</label><input type="number" onchange="inputChange(this, 'textY')" placeholder="请设置Y坐标,默认500" /></p>
             </div>
@@ -210,7 +212,8 @@
            imgWatermarkUrl:'',             //水印图片url
            addText:'请设置水印文字内容',     //要绘制的文字内容
            addTextColor:'red',             //文字颜色
-           addTextSize:'35px 微软雅黑',     //文字字号字体
+           addTextFamily:'微软雅黑',        //文字字体
+           addTextSize:'35',               //文字大小
            textX:500,                      //水印文字位置 X轴
            textY: 500,                     //水印文字位置 Y轴
            imgX:500,                       //水印图片位置 X轴
@@ -277,7 +280,8 @@
                     //绘制背景
                     ctx.drawImage(img, 0, 0);
                      //绘制水印文字
-                    ctx.font = initObj.addTextSize;
+                    var fontSizeFamily= initObj.addTextSize +'px' + ' ' + initObj.addTextFamily
+                    ctx.font = fontSizeFamily;
                     ctx.fillStyle = initObj.addTextColor;
                     ctx.fillText(initObj.addText, initObj.textX, initObj.textY);
                      //绘制水印图片
