@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Image Watermarking</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+            font-family: "Microsoft soft";
+        }
+        html,body{
+            height:100%;
+        }
+        #app{
+           height:100%;
+           background:#c1cbd7;
+           display:flex;
+           justify-content:space-between;
+        }
+        .sideBar{
+          width:220px;
+          height:100%;
+          padding:20px;
+          box-sizing:border-box;
+          background:#fff;
+          display:flex;
+          flex-direction:column;     
+          border:5px solid #ddd;
+          border-image: -webkit-linear-gradient(#A020F0, #2ED) 20 20;
+          border-image: -moz-linear-gradient(#A020F0, #2ED) 20 20;
+          border-image: -o-linear-gradient(#A020F0, #2ED) 20 20;
+          border-image: linear-gradient(#A020F0, #2ED) 20 20;
+        }
+        .main{
+          width:calc(100% - 240px);
+          height:100%;
+          background:#fff;
+          display:flex;
+          justify-content: center;
+          align-items: center;
+          position:relative;
+          padding:20px;
+          box-sizing:border-box;
+          overflow: auto;
+          border:5px solid #ddd;
+          border-image: -webkit-linear-gradient(#A020F0, #2ED) 20 20;
+          border-image: -moz-linear-gradient(#A020F0, #2ED) 20 20;
+          border-image: -o-linear-gradient(#A020F0, #2ED) 20 20;
+          border-image: linear-gradient(#A020F0, #2ED) 20 20;
+        }
+        .menu{
+           height:100%;
+           width:100%;
+           display:flex;
+           flex-direction:column;
+        }
+        .menu p{
+            height:65px;
+            box-sizing:border-box;
+            display:flex;
+            flex-direction:column;
+             justify-content:space-between;
+             margin-bottom:20px;
+        }
+        .menu p label{
+            font-size:16px;  
+        }
+        .menu p input{
+            box-sizing:border-box;
+            height:38px;
+            outline-style: none ;
+            color:#A020F0;
+            border: 1px solid #2ED; 
+            border-radius: 3px;
+            padding: 10px 5px;
+            font-size: 14px;
+            font-family: "Microsoft soft";
+        }
+         .menu p input:focus, .menu p input:active{
+            border-color: #2ED;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+        }
+        .download-box{
+            width:100%;
+            height:200px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .download-box .download{
+            display:inline-block;
+            width:98px;
+            height:38px;
+            line-height:38px;
+            text-align:center;
+            border:1px solid #2ED;
+            border-radius:5px;
+            font-size:14px;
+            color:#2ED;
+            font-weight:bold;
+            cursor: pointer;
+
+        }
+        .download-box .download:hover{
+            border-color:#2ED;
+            background:#2ED;
+            color:rgba(255,255,255,1);
+        }
+        .a-upload {
+            position: relative;
+            display: inline-block;
+            background:linear-gradient(90deg,#A020F0 0%,#2ED 100%);
+            border-radius: 5px;
+            width:100%;
+            height:30px;
+            text-align:center;
+            overflow: hidden;
+            color:#fff;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 30px;
+            cursor:pointer;
+            margin-bottom:30px;
+        }
+        .a-upload input {
+            position: absolute;
+            width:100%;
+            height:100%;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .a-upload:hover {
+            opacity:.8;
+        }
+        /* 滚动条 */
+        ::-webkit-scrollbar-track-piece {
+            background: rgba(0, 250, 154, 0.3);
+            -webkit-border-radius: 2px;
+        }
+        /*滚动条样式背景颜色*/
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            -webkit-border-radius: 4px;
+        }
+        /*滚动条宽高*/
+        ::-webkit-scrollbar-thumb:vertical {
+            background-color: rgba(0, 250, 154, 0.5);
+            -webkit-border-radius: 3px;
+        }
+        /*垂直滚动条*/
+        ::-webkit-scrollbar-thumb:horizontal {
+            background-color: rgba(0, 250, 154, 0.5);
+            -webkit-border-radius: 3px;
+        }
+        /*垂直滚动条*/
+        :after,
+        :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="sideBar">
+            <div class="menu menu-top">
+                <a href="javascript:;" class="a-upload">选择背景图片
+                    <input type="file" id="file" multiple="multiple" accept="image/*"/>
+                </a>
+                <p><label>水印文字</label><input type="text" onchange="inputChange(this, 'addText')" placeholder="请设置水印文字内容" /></p>
+                <p><label>文字颜色</label><input type="text" onchange="inputChange(this, 'addTextColor')" placeholder="请设置字体颜色,默认red" /></p>
+                <p><label>文字字号字体</label><input type="text" onchange="inputChange(this, 'addTextSize')" placeholder="请设置字体设置,默认35px 微软雅黑" /></p>
+                <p><label>水印文字X坐标</label><input type="number" onchange="inputChange(this, 'textX')" placeholder="请设置X坐标,默认500" /></p>
+                <p><label>水印文字Y坐标</label><input type="number" onchange="inputChange(this, 'textY')" placeholder="请设置Y坐标,默认500" /></p>
+            </div>
+            <div class="menu menu-bottom">    
+                <a href="javascript:;" class="a-upload">选择水印图片
+                    <input type="file" id="signature" accept="image/*" />
+                </a>
+                <p><label>水印图片X坐标</label><input type="number" onchange="inputChange(this, 'imgX')" placeholder="请设置X坐标,默认500" /></p>
+                <p><label>水印图片Y坐标</label><input type="number" onchange="inputChange(this, 'imgY')" placeholder="请设置Y坐标,默认600" /></p>
+            </div>
+            <div class="download-box">
+                <div class="download" onclick="imageDwonLoad()">下载</div>
+            </div>   
+        </div>
+        <div class="main">
+            <canvas id="myCanvas" height="100%" width="100%">您的浏览器不支持Canvas</canvas>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+       var file=document.getElementById('file');
+       var signature = document.getElementById('signature');
+
+       var initObj={
+           imgUrl:'',                      //背景图片的url路径
+           imgWatermarkUrl:'',             //水印图片url
+           addText:'请设置水印文字内容',     //要绘制的文字内容
+           addTextColor:'red',             //文字颜色
+           addTextSize:'35px 微软雅黑',     //文字字号字体
+           textX:500,                      //水印文字位置 X轴
+           textY: 500,                     //水印文字位置 Y轴
+           imgX:500,                       //水印图片位置 X轴
+           imgY:600,                       //水印图片位置 Y轴
+           imgDownLoadSrc:''               //制作完能下载的图片地址
+       }
+       
+          /**
+           * 背景图片上传
+           *
+           * **/
+         file.addEventListener('change', function () {
+            var reader = new FileReader()
+            reader.readAsDataURL(this.files[0])
+            reader.onload = function (e) {
+                // 转换后的base64就在e.target.result里面
+               initObj.imgUrl= e.target.result
+               createWaterMark('myCanvas')
+            }
+                      
+            }, false)
+         /**
+          * 水印图片上传
+          *
+          * **/
+        signature.addEventListener('change', function () {
+            var reader = new FileReader()
+            reader.readAsDataURL(this.files[0])
+            reader.onload = function (e) {
+                // 转换后的base64就在e.target.result里面
+                initObj.imgWatermarkUrl = e.target.result
+                createWaterMark('myCanvas')               
+               
+            }
+
+        }, false)
+         /**
+          * 参数设置
+          *
+          * **/
+        function inputChange(e, type){
+            initObj[type]= e.value
+            if (initObj.imgUrl) {
+                createWaterMark('myCanvas')
+            }
+        }
+        /**
+         * 显示并绘制水印
+         *
+         * **/
+        function createWaterMark(canvasId) { 
+                var img = new Image;
+                var signatureImg = new Image;
+                img.setAttribute("crossOrigin", 'Anonymous');
+                signatureImg.setAttribute("crossOrigin", 'Anonymous');
+                var canvas = document.getElementById(canvasId);
+                var ctx = canvas.getContext("2d");
+                img.onload = function () {
+                    canvas.style.letterSpacing = '10px';
+                    var _w = img.naturalWidth;
+                    var _h = img.naturalHeight;
+                    canvas.setAttribute('width', _w);
+                    canvas.setAttribute('height', _h);
+                    //绘制背景
+                    ctx.drawImage(img, 0, 0);
+                     //绘制水印文字
+                    ctx.font = initObj.addTextSize;
+                    ctx.fillStyle = initObj.addTextColor;
+                    ctx.fillText(initObj.addText, initObj.textX, initObj.textY);
+                     //绘制水印图片
+                    if (initObj.imgWatermarkUrl) {
+                        signatureImg.src = initObj.imgWatermarkUrl
+                        signatureImg.onload = function () {
+                            var wh = signatureImg.naturalWidth;
+                            var ht = signatureImg.naturalHeight;
+                            ctx.drawImage(signatureImg, 0, 0, wh, ht, initObj.imgX, initObj.imgY, wh, ht);
+                            initObj.imgDownLoadSrc = canvas.toDataURL("image/png");
+
+                        }
+
+                    }else{
+                        initObj.imgDownLoadSrc = canvas.toDataURL("image/png");
+                    }        
+
+                }
+
+                img.src = initObj.imgUrl;
+               
+            }
+         /**
+          * 图片下载
+          * 
+          * **/
+           function imageDwonLoad (){
+               if(initObj.imgDownLoadSrc){
+                     var a = document.createElement("a");
+                     var timestamp = (new Date()).getTime();
+                     a.href = initObj.imgDownLoadSrc;
+                     a.download = timestamp;
+                     a.click();
+               }
+              
+           }
+        
+        
+    </script>
+</body>
+
+</html>
