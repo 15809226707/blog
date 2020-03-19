@@ -9,7 +9,7 @@ function login(){
             sessionStorage.setItem("CLOUDEMPEROR_TOKEN", "Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ==");
             window.location.href = 'https://cloudemperor.github.io/blog/views/curriculumVitae/index.html'
             break;
-        //watermarking page
+        //Image Watermarking page
         case 'Q2xvdWRFbXBlcm9yPWltZw==':
             window.location.href = 'https://cloudemperor.github.io/blog/views/watermarking/index.html'
             break;
