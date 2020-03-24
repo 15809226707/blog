@@ -52,6 +52,6 @@
 
 ## 5. React
 
-* :book: [create-react-app 实现antd 自定义主题](https://github.com/CloudEmperor/blog/blob/master/markdown/react/antdTheme.md)
+* :book: [create-react-app 配置antd 自定义主题](https://github.com/CloudEmperor/blog/blob/master/markdown/react/antdTheme.md)
 
 ---
