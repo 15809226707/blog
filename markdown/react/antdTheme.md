@@ -1,7 +1,7 @@
 # create-react-app 配置antd 自定义主题
 
 
-```javascript
+```
 
 /*版本号*/
 antd: "^3.24.0"
@@ -16,7 +16,7 @@ react: "^16.10.2"
 antd的样式使用了 Less 作为开发语言，并定义了一系列全局/组件的样式变量，你可以根据需求进行相应调整。
 以下是一些最常用的通用变量，所有样式变量可以在 这里 找到。
 
-```javascript
+```less
 
 @primary-color: #1890ff; // 全局主色
 @link-color: #1890ff; // 链接色
@@ -37,9 +37,9 @@ antd的样式使用了 Less 作为开发语言，并定义了一系列全局/组
 
 ## 二. 安装babel-plugin-import 安装less-loader（如果antd按需加载和less-loader已配置，可跳过此步骤直接看第三步）
 
-- [ ] 安装babel-plugin-import 
+- 安装babel-plugin-import 
  
- ```javascript
+ ```
 
  npm install babel-plugin-import --save-dev
 
@@ -87,9 +87,9 @@ antd的样式使用了 Less 作为开发语言，并定义了一系列全局/组
 
 ```
 
-- [ ] 安装less-loader
+- 安装less-loader
 
- ```javascript
+ ```
 
  npm install less-loader --save-dev  
 
