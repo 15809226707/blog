@@ -92,7 +92,7 @@ cloudEmperor-serve
 >浏览器中打开 http://localhost:3000/就可以看到前端项目效果。
 >如果要让局域网访问，修改localhost为本地地址，关闭防火墙。其他人访问你本地地址就可以了
 
-```
+```javascript
 //修改localhost为本地地址,进入bin/www文件
 
 server.listen(port);
@@ -132,7 +132,7 @@ cloudEmperor-serve
 
 2. 修改routes下的 users.js文件名为 admin.js。里面内容更改如下：
 
-```
+```javascript
 //改之前
 var express = require('express');
 var router = express.Router();
@@ -157,7 +157,7 @@ module.exports = router;  //统一用module.exports方式暴露, export default�
 
 3. 在根目录下建文件夹 api -> admin -> index.js
 
-```
+```javascript
 //api -> admin -> index.js 
 //此处接收登录传参并对前端做出响应
 
@@ -180,7 +180,7 @@ module.exports = new Admin();
 
 4. 修改routes下的 index.js文件内容
 
-```
+```javascript
 //改之前
 var express = require('express');
 var router = express.Router();
@@ -203,7 +203,7 @@ module.exports= app =>{
 
 5. 修改app.js
 
-```
+```javascript
 //改之前
 var createError = require('http-errors');
 var express = require('express');
@@ -289,7 +289,7 @@ module.exports = app;
 
 6. 为了方便，将bin ->www.js修改
 
-```
+```javascript
 //改之前,默认localhost
 server.listen(port);
 
@@ -300,7 +300,7 @@ server.listen(port, '192.168.1.117');
 
 7. 前端现在就可以发送登录请求，接收返回参数
 
-```
+```javascript
   handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
