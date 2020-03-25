@@ -356,7 +356,7 @@ module.exports=db
 数据库连接参数说明：
 
 参数|描述
---|:--:
+--|--
 host               | 主机地址 （默认：localhost）
 user               | 用户名
 password           | 密码
