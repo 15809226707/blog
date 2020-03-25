@@ -4,6 +4,17 @@
 >
 >全栈是前端发展的大趋势，初次学习并实践Node.js,整个过程做一个学习记录。
 
+>技术栈：
+>
+>- NodeJS
+>- Express框架
+>- MySQL数据库
+>- 中间件(cors中间件 body-parser中间件 mysql中间件)
+>
+>- React
+>- Antd
+>- Redux
+
 ## 一.安装配置Node.js
 
 >此处只介绍一种Node.js安装的方式，在Windows上安装Node.js。
