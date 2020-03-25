@@ -6,14 +6,16 @@
 
 >技术栈：
 >
+>后端--->
 >- NodeJS
 >- Express框架
 >- MySQL数据库
->- 中间件(cors中间件 body-parser中间件 mysql中间件)
 >
+>前端--->
 >- React
 >- Antd
 >- Redux
+>- Axios
 
 ## 一.安装配置Node.js
 
