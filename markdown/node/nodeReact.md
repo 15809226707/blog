@@ -147,7 +147,7 @@ module.exports = router;
 //改之后
 var express = require('express');
 var router = express.Router();
-var admin = require('../api/admin'); //统一用require方式引入,import不支持
+var admin = require('../controllers/admin'); //统一用require方式引入,import不支持
 
 router.post('/admin_login', admin.adminLogin); //用户登录
 
@@ -155,10 +155,10 @@ module.exports = router;  //统一用module.exports方式暴露, export default�
 
 ```
 
-3. 在根目录下建文件夹 api -> admin -> index.js
+3. 在根目录下建文件夹 controllers -> admin -> index.js
 
 ```javascript
-//api -> admin -> index.js 
+//controllers -> admin -> index.js 
 //此处接收登录传参并对前端做出响应
 
 class Admin{    
@@ -274,7 +274,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //设置允许跨域访问该服务.
 app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.header('Access-Control-Allow-Methods', '*');
   res.header('Content-Type', 'application/json;charset=utf-8');
@@ -306,9 +306,7 @@ server.listen(port, '192.168.1.117');
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 post('/admin/admin_login', values).then(res => {
-                    console.log(res)
                     if (res.status === 200) {
-                        localStorage.setItem('userName', res.data.userName)
                         openNotification('success', res.message)
                         this.props.history.push('/demo')
                     } else {
@@ -323,15 +321,69 @@ server.listen(port, '192.168.1.117');
 
 ```
 
-## 五.数据库MongoDB
+## 五.MySQL数据库
 
+1. 下载并安装MySQL，最新版本可以在[ MySQL 下载](https://dev.mysql.com/downloads/mysql/) 中下载中查看 
 
+2. 安装mysql依赖包
+
+```
+npm install --save mysql
+
+```
+
+3. 连接数据库,在项目根目录下建 config -> db.js,配置数据库信息
+
+```javascript
+
+//db.js
+
+const mysql = require("mysql");
+//mysql数据库连接配置
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "a123456",
+  database: "user" //数据库名
+});
+
+db.connect();
+
+module.exports=db
+
+```
+
+数据库连接参数说明：
+
+参数|描述
+--|:--:
+host               | 主机地址 （默认：localhost）
+user               | 用户名
+password           | 密码
+port               | 端口号 （默认：3306）
+database           | 数据库名
+charset            | 连接字符集（默认：'UTF8_GENERAL_CI'，注意字符集的字母都要大写）
+localAddress       | 此IP用于TCP连接（可选）
+socketPath         | 接到unix域路径，当使用 host 和 port 时会被忽略
+timezone           | 时区（默认：'local'）
+connectTimeout     | 连接超时（默认：不限制；单位：毫秒）
+stringifyObjects   | 是否序列化对象
+typeCast           | 是否将列值转化为本地JavaScript类型值 （默认：true）
+queryFormat        | 自定义query语句格式化方法
+supportBigNumbers  | 数据库支持bigint或decimal类型列时，需要设此option为true （默认：false）
+bigNumberStrings   | supportBigNumbers和bigNumberStrings启用 强制bigint或decimal列以JavaScript字符串类型返回（默认：false）
+dateStrings        | 强制timestamp,datetime,data类型以字符串类型返回，而不是JavaScript Date类型（默认：false）
+debug              | 开启调试（默认：false）
+multipleStatements | 是否许一个query中有多个MySQL语句 （默认：false）
+flags              | 用于修改连接标志
+ssl                | 使用ssl参数（与crypto.createCredenitals参数格式一至）或一个包含ssl配置文件名称的字符串，目前只捆绑Amazon RDS的配置文件
 
 
 
 >参考资料地址：
 >
 >[Node.js 教程 | 菜鸟教程: https://www.runoob.com/nodejs/nodejs-tutorial.html](https://www.runoob.com/nodejs/nodejs-tutorial.html)
->
+>[Node.js 连接 MySQL](https://www.runoob.com/nodejs/nodejs-mysql.html)
+>[MySQL 教程](https://www.runoob.com/mysql/mysql-tutorial.html)
 >
 >
