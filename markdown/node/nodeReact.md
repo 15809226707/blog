@@ -336,9 +336,16 @@ server.listen(port, '192.168.1.117');
 
 ## 五.MySQL数据库
 
-1. 下载并安装MySQL，最新版本可以在[ MySQL 下载](https://dev.mysql.com/downloads/mysql/) 中下载中查看 
+1. 下载并安装MySQL
 
-2. 安装mysql依赖包
+两种安装方式：
+
+  - 正常安装，参考 [ Windows10 MYSQL Installer 安装](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)
+  - 免安装操作，参考 [Windows 上安装 MySQL ](https://www.runoob.com/mysql/mysql-install.html)
+
+2. MySQL_Workbench 创建数据库和表,具体操作参考[初学者使用MySQL_Workbench 6.0CE创建数据库和表，以及在表中插入数据](https://blog.csdn.net/u011719449/article/details/12521437?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
+
+此处创建数据库名字为 cloudemperor
 
 ```
 npm install --save mysql
@@ -356,8 +363,8 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "a123456",
-  database: "user" //数据库名
+  password: "zhy554971375@",
+  database: "cloudemperor" //数据库名
 });
 
 db.connect();
