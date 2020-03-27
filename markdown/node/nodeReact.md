@@ -67,7 +67,24 @@ npm install
 ```
 npm start 
 
+//或者
+
+node bin/www
+
 ```
+5. supervisor的安装(由于使用express 时每次更改保存代码的时候需要再一次重新的启动服务器，所以有时候采用xepress 进行开发的时候遇到的问题 往往是没有重启服务器造成的.采用supervisor 的好处是 每次更改代码的时候 会自动帮你 重新启动服务器，进行热更新。这样可以很方便我们使用express进行开发了。)
+
+```
+npm i supervisor -g
+
+```
+supervisor 启动项目命令：
+
+```
+supervisor bin/www 
+
+```
+
 然后在浏览器中打开 http://localhost:3000/ 网址就可以看到这个应用了。
 
 通过生成器创建的应用一般都有如下目录结构：
