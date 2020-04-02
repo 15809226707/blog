@@ -58,7 +58,7 @@
 
 ---
 
-## 5. 前端面试宝典
+## 6. 前端面试宝典
 
 * :book: [前端面试宝典](https://github.com/CloudEmperor/blog/blob/master/markdown/interviewQuestion/interviewQuestion.md)
 
