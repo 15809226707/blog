@@ -4,7 +4,6 @@ sessionStorage.removeItem("CLOUDEMPEROR_TOKEN")
 function login(){
     var value = document.getElementById('password').value;
     var ps = window.btoa('CloudEmperor='+ value)
-    console.log(ps)
     switch (ps){
         //CurriculumVitae page
         case 'Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ==' : 
