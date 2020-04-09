@@ -258,18 +258,15 @@ React 是一个声明式，高效且灵活的用于构建用户界面的 JavaScr
 
 ### 2. 生命周期
 
-> - 挂载卸载过程
->> - constructor() ---完成了React数据的初始化。需要注意：只要使用了constructor()就必须写super(),否则会导致this指向错误。
->> - componentWillMount() ---一般用的比较少，它更多的是在服务端渲染时使用。它代表的过程是组件已经经历了constructor()初始化数据后，但是还未渲染DOM时。
->> - componentDidMount() ---组件第一次渲染完成，此时dom节点已经生成，可以在这里调用ajax请求，返回数据setState后组件会重新渲染
->> - componentWillUnmount () ---在此处完成组件的卸载和数据的销毁（clear你在组建中所有的setTimeout,setInterval；移除所有组建中的监听removeEventListener）。
+- componentWillMount: 在渲染前调用,在客户端也在服务端。
+- componentDidMount : 在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
+- componentWillReceiveProps: 在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
+- shouldComponentUpdate: 返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。 
+  可以在你确认不需要更新组件时使用。
+- componentWillUpdate:在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用。
+- componentDidUpdate: 在组件完成更新后立即调用。在初始化时不会被调用。
+- componentWillUnmount:在组件从 DOM 中移除之前立刻被调用。
 
-> - 更新过程
->> - componentWillReceiveProps (nextProps) ---在接受父组件改变后的props需要重新渲染组件时用到的比较多，接受一个参数nextProps，通过对比nextProps和this.props，将nextProps的state为当前组件的state，从而重新渲染组件。
->> - shouldComponentUpdate(nextProps,nextState) ---主要用于性能优化(部分更新)，唯一用于控制组件重新渲染的生命周期，由于在react中，setState以后，state发生变化，组件会进入重新渲染的流程，在这里return false可以阻止组件的更新，因为react父组件的重新渲染会导致其所有子组件的重新渲染，这个时候其实我们是不需要所有子组件都跟着重新渲染的，因此需要在子组件的该生命周期中做判断。
->> - componentWillUpdate (nextProps,nextState) ---当shouldComponentUpdate返回true以后，组件进入重新渲染的流程，进入componentWillUpdate,这里同样可以拿到nextProps和nextState。
->> - componentDidUpdate(prevProps,prevState) ---组件更新完毕后，react只会在第一次初始化成功会进入componentDidmount,之后每次重新渲染后都会进入这个生命周期，这里可以拿到prevProps和prevState，即更新前的props和state。
->> - render() ---此render函数会插入jsx生成的dom结构，react会生成一份虚拟dom树，在每一次组件更新时，在此react会通过其diff算法比较更新前后的新旧DOM树，比较以后，找到最小的有差异的DOM节点，并重新渲染。
 
 
 ### 3. React路由传参
