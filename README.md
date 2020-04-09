@@ -9,7 +9,7 @@
 3. **[Node](#3-Node)**
 4. **[Utils工具类函数封装](#4-Utils工具类函数封装)**
 5. **[React](#5-React)**
-6. **[前端面试宝典](#6-前端面试宝典)**
+6. **[前端知识汇总](#6-前端知识汇总)**
 
 ---
 
@@ -58,8 +58,8 @@
 
 ---
 
-## 6. 前端面试宝典
+## 6. 前端知识汇总
 
-* :book: [前端面试宝典](https://github.com/CloudEmperor/blog/blob/master/markdown/interviewQuestion/interviewQuestion.md)
+* :book: [前端知识汇总](https://github.com/CloudEmperor/blog/blob/master/markdown/interviewQuestion/interviewQuestion.md)
 
 ---
