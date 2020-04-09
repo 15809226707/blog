@@ -10,9 +10,9 @@
 
 
 
-## js
+## 第一部分. js
 
-### call, apply, bind的区别，怎么实现call,apply方法?
+### 1. call, apply, bind的区别，怎么实现call,apply方法?
 
 >在js中，每个函数的原型都指向Function.prototype对象（js基于原型链的继承）。因此，每个函数都会有apply，call，和bind方法，这些方法继承于Function。
 >它们的作用是一样的，都是用来改变函数中this的指向。
@@ -76,13 +76,13 @@ Function.prototype.myApply = function(context=window) {
 ```
 
 
-## Vue
+## 第二部分. Vue
 
-### 概念
+### 1. 概念
 
 Vue是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。
 
-### 特点
+### 2. 特点
 
 - 单页面应用
 - 双向数据绑定：视图改变 数据自动更新；数据更新 视图自动改变
@@ -90,7 +90,7 @@ Vue是一套用于构建用户界面的渐进式框架。与其它大型框架�
 - 框架：自己写的代码被框架调用（库：自己调用库的代码）
 - 声明式
 
-### 生命周期
+### 3. 生命周期
 
 - beforeCreate：即将创建。此阶段为实例初始化之后，此时的数据观察和事件机制都未形成
 - created：创建完毕。在这个阶段vue实例已经创建，我们在同样打印一下data和DOM元素。
@@ -101,7 +101,7 @@ Vue是一套用于构建用户界面的渐进式框架。与其它大型框架�
 - beforeDestroy:销毁之前。到上一步vue已经成功的通过数据驱动DOM更新，当我们不在需要vue操纵DOM时，就需要销毁Vue，也就是清除vue实例与DOM的关联，调用destroy方法可以销毁当前组件。在销毁前，会触发beforeDestroy钩   子函数。
 - destroyed:销毁之后。在销毁后，会触发destroyed钩子函数。 
 
-### Vue指令
+### 4. Vue指令
 
 - v-model ：放在表单元素input、textarea、select>option上的，实现双向数据绑定
 - v-text ： 展示对应的文本
@@ -115,21 +115,21 @@ Vue是一套用于构建用户界面的渐进式框架。与其它大型框架�
 - v-pre : 跳过有这个指令的标签及其子元素的编译，按照原生代码编译
 
 
-### 事件修饰符
+### 5. 事件修饰符
 
-> - .self只点元素本身时才触发事件
-> - .stop阻止冒泡事件
-> - .prevent阻止默认事件
-> - .once对应函数只触发一次
-> - .capture在捕获阶段触发二级绑定事件
-> - .passive优先执行默认事件（滚动行为）
+- .self只点元素本身时才触发事件
+- .stop阻止冒泡事件
+- .prevent阻止默认事件
+- .once对应函数只触发一次
+- .capture在捕获阶段触发二级绑定事件
+- .passive优先执行默认事件（滚动行为）
 
-### 表单修饰符
+### 6. 表单修饰符
 
-> - .number转化为数字，类似parse转化
-> - .trim去字符串前后空格
+- .number转化为数字，类似parse转化
+- .trim去字符串前后空格
 
-### directives自定义指令
+### 7. directives自定义指令
 
 ```javascript
 
@@ -165,7 +165,7 @@ directives: {
 > - componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
 > - unbind：只调用一次，指令与元素解绑时调用。
 
-### vue-router路由传参
+### 8. vue-router路由传参
 
 > 提供了两种传参方式:
 > - query传参（问号传参）
@@ -174,25 +174,25 @@ directives: {
 >  在映射表中添加  /:变量  的形式； :to={name:'',params:{变量:''}}}
 
 
-### 接口请求一般放在哪个生命周期中？
+### 9. 接口请求一般放在哪个生命周期中？
 
 接口请求一般放在mounted中，但需要注意的是服务端渲染时不支持mounted，需要放到created中。
 
-### Computed和Watch区别
+### 10. Computed和Watch区别
 
 - Computed本质是一个具备缓存的watcher，依赖的属性发生变化就会更新视图。
   适用于计算比较消耗性能的计算场景。当表达式过于复杂时，在模板中放入过多逻辑会让模板难以维护，可以将复杂的逻辑放入计算属性中处理。
 - Watch没有缓存性，更多的是观察的作用，可以监听某些数据执行回调。当我们需要深度监听对象中的属性时，可以打开deep：true选项，这样便会对对象中的每一项进行监听。这样会带来性能问题，优化的话可以使用字符串形式监听，如果没有写到组件中，不要忘记使用unWatch手动注销哦。
 
-### v-if和v-show的区别
+### 11. v-if和v-show的区别
 
 当条件不成立时，v-if不会渲染DOM元素，v-show操作的是样式(display)，切换当前DOM的显示和隐藏。
 
-### 组件中的data为什么是一个函数？
+### 12. 组件中的data为什么是一个函数？
 
 一个组件被复用多次的话，也就会创建多个实例。本质上，这些实例用的都是同一个构造函数。如果data是对象的话，对象属于引用类型，会影响到所有的实例。所以为了保证组件不同的实例之间data不冲突，data必须是一个函数。
 
-### Vue模版编译原理
+### 13. Vue模版编译原理
 
 简单说，Vue的编译过程就是将template转化为render函数的过程。会经历以下阶段：
 
@@ -200,14 +200,14 @@ directives: {
 - 优化
 - codegen
 
-### keep-alive作用
+### 14. keep-alive作用
 
 keep-alive可以实现组件缓存，当组件切换时不会对当前组件进行卸载。
 常用的两个属性include/exclude，允许组件有条件的进行缓存。
 两个生命周期activated/deactivated，用来得知当前组件是否处于活跃状态。
 keep-alive的中还运用了LRU(Least Recently Used)算法。
 
-### 性能优化
+### 15. 性能优化
 
 - 编码阶段
 >1. 尽量减少data中的数据，data中的数据都会增加getter和setter，会收集对应的watcher
@@ -238,7 +238,7 @@ keep-alive的中还运用了LRU(Least Recently Used)算法。
 >3. 客户端缓存、服务端缓存
 
 
-### Vuex
+### 16. Vuex
 
 - 概念
 > Vuex 是一个专为 Vue应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
@@ -250,19 +250,19 @@ keep-alive的中还运用了LRU(Least Recently Used)算法。
 > Module --- Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割。
 
 
-## React
+## 第三部分. React
 
-### 概念
+### 1. 概念
 
 React 是一个声明式，高效且灵活的用于构建用户界面的 JavaScript 库。使用 React 可以将一些简短、独立的代码片段组合成复杂的 UI 界面，这些代码片段被称作“组件”。
 
-### 生命周期
+### 2. 生命周期
 
 > - 挂载卸载过程
 >> - constructor() ---完成了React数据的初始化。需要注意：只要使用了constructor()就必须写super(),否则会导致this指向错误。
 >> - componentWillMount() ---一般用的比较少，它更多的是在服务端渲染时使用。它代表的过程是组件已经经历了constructor()初始化数据后，但是还未渲染DOM时。
 >> - componentDidMount() ---组件第一次渲染完成，此时dom节点已经生成，可以在这里调用ajax请求，返回数据setState后组件会重新渲染
->> - componentWillUnmount () 在此处完成组件的卸载和数据的销毁（clear你在组建中所有的setTimeout,setInterval；移除所有组建中的监听removeEventListener）。
+>> - componentWillUnmount () ---在此处完成组件的卸载和数据的销毁（clear你在组建中所有的setTimeout,setInterval；移除所有组建中的监听removeEventListener）。
 
 > - 更新过程
 >> - componentWillReceiveProps (nextProps) ---在接受父组件改变后的props需要重新渲染组件时用到的比较多，接受一个参数nextProps，通过对比nextProps和this.props，将nextProps的state为当前组件的state，从而重新渲染组件。
@@ -272,7 +272,7 @@ React 是一个声明式，高效且灵活的用于构建用户界面的 JavaScr
 >> - render() ---此render函数会插入jsx生成的dom结构，react会生成一份虚拟dom树，在每一次组件更新时，在此react会通过其diff算法比较更新前后的新旧DOM树，比较以后，找到最小的有差异的DOM节点，并重新渲染。
 
 
-### React路由传参
+### 3. React路由传参
 
 ```javascript
 
@@ -294,7 +294,7 @@ queryString.parse(this.props.location.search)
 
 ```
 
-### 直接输出HTML方法
+### 4. 直接输出HTML方法
 
 ```javascript
 
@@ -303,9 +303,9 @@ queryString.parse(this.props.location.search)
 ```
 
 
-## Vue&React
+## 第四部分. Vue&React
 
-### 为什么说Vue 的响应式更新比 React 快？
+### 1. 为什么说Vue 的响应式更新比 React 快？
 
 - Vue (响应式+依赖收集)对于响应式属性的更新，只会精确更新依赖收集的当前组件，个组件都有自己的渲染 watcher，而不会递归的去更新子组件。
 - React 在类似的场景下是自顶向下的进行递归更新的，也就是说，React 中假如 ChildComponent 里还有十层嵌套子元素，那么所有层次都会递归的重新render（在不进行手动优化的情况下），这是性能上的灾难。（因此，React 创造了Fiber，创造了异步渲染，其实本质上是弥补被自己搞砸了的性能）。他们能用收集依赖的这套体系吗？不能，因为他们遵从Immutable的设计思想，永远不在原对象上修改属性，那么基于 Object.defineProperty 或 Proxy 的响应式依赖收集机制就无从下手了（你永远返回一个新的对象，我哪知道你修改了旧对象的哪部分？）同时，由于没有响应式的收集依赖，React 只能递归的把所有子组件都重新 render一遍（除了memo和shouldComponentUpdate这些优化手段），然后再通过 diff算法 决定要更新哪部分的视图，这个递归的过程叫做 reconciler，听起来很酷，但是性能很灾难。
