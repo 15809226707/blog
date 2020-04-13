@@ -12,7 +12,34 @@
 
 ## 第一部分. js
 
-### 1. call, apply, bind的区别，怎么实现call,apply方法?
+### 1. js数据类型
+
+- 基本数据类型：Boolean、Number、String、undefined、Null、Symbol (ES6新增，表示独一无二的值)
+- 引用数据类型：Object、Array、Function
+
+### 2. 数据类型判断
+
+- typeof ：typeof返回一个表示数据类型的字符串，返回结果包括：Number、Boolean、String、Symbol、Object、undefined、Function等7种数据类型，但不能判断Null、Array等
+- instanceof ：instanceof 是用来判断A是否为B的实例，表达式为：A instanceof B，如果A是B的实例，则返回true,否则返回false。instanceof 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性，但它不能检测Null和          undefined
+- constructor ：constructor作用和instanceof非常相似。但constructor检测 Object与instanceof不一样，还可以处理基本数据类型的检测。不过函数的 constructor 是不稳定的，这个主要体现在把类的原型进行重写，在重写的过程中很有可能出现把之前    的constructor给覆盖了，这样检测出来的结果就是不准确的。
+- Object.prototype.toString.call() ：是最准确最常用的方式。
+
+```javascript
+
+Object.prototype.toString.call();               // [object String]
+Object.prototype.toString.call(1);              // [object Number]
+Object.prototype.toString.call(true);           // [object Boolean]
+Object.prototype.toString.call(undefined);      // [object Undefined]
+Object.prototype.toString.call(null);           // [object Null]
+Object.prototype.toString.call(new Function()); // [object Function]
+Object.prototype.toString.call(new Date());     // [object Date]
+Object.prototype.toString.call([]);             // [object Array]
+Object.prototype.toString.call(new RegExp());   // [object RegExp]
+Object.prototype.toString.call(new Error());    // [object Error]
+
+```
+
+### 3. call, apply, bind的区别，怎么实现call,apply方法?
 
 >在js中，每个函数的原型都指向Function.prototype对象（js基于原型链的继承）。因此，每个函数都会有apply，call，和bind方法，这些方法继承于Function。
 >它们的作用是一样的，都是用来改变函数中this的指向。
@@ -74,6 +101,211 @@ Function.prototype.myApply = function(context=window) {
 
 
 ```
+
+### 4. this指向问题
+
+>由于 JS 的设计原理: 在函数中，可以引用运行环境中的变量。因此就需要一个机制来让我们可以在函数体内部获取当前的运行环境，这便是this。因此要明白 this 指向，其实就是要搞清楚 函数的运行环境，说人话就是，谁调用了函数。
+> this的值是在执行的时候才能确认，定义的时候不能确认。 因为this是执行上下文环境的一部分，而执行上下文需要在代码执行之前确定，而不是定义的时候。
+
+- 对于直接调用 foo 来说，不管 foo 函数被放在了什么地方，this 一定是 window
+- 对于 obj.foo() 来说，我们只需要记住，谁调用了函数，谁就是 this，所以在这个场景下 foo 函数中的 this 就是 obj 对象
+- 在构造函数模式中，类中(函数体中)出现的this.xxx=xxx中的this是当前类的一个实例
+- call、apply和bind：this 是第一个参数
+- 箭头函数this指向:箭头函数没有自己的this，看其外层的是否有函数，如果有，外层函数的this就是内部箭头函数的this，如果没有，则this是window。
+
+
+### 5. 原型 / 构造函数 / 实例
+
+- 原型(prototype): 一个简单的对象，用于实现对象的 属性继承。可以简单的理解成对象的爹。在 Firefox 和 Chrome 中，每个JavaScript对象中都包含一个__proto__ (非标准)的属性指向它爹(该对象的原型)，可obj.__proto__进行访问。
+
+
+- 构造函数: 可以通过new来 新建一个对象 的函数。
+
+
+- 实例: 通过构造函数和new创建出来的对象，便是实例。 实例通过__proto__指向原型，通过constructor指向构造函数。
+
+
+### 6. 原型链
+
+> 概念：原型链是由原型对象组成，每个对象都有 __proto__ 属性，指向了创建该对象的构造函数的原型，__proto__ 将对象连接起来组成了原型链。是一个用来实现继承和共享属性的有限的对象链。
+
+- 属性查找机制: 当查找对象的属性时，如果实例对象自身不存在该属性，则沿着原型链往上一级查找，找到时则输出，不存在时，则继续沿着原型链往上一级查找，直至最顶级的原型对象Object.prototype，如还是没找到，则输出undefined；
+
+- 属性修改机制: 只会修改实例对象本身的属性，如果不存在，则进行添加该属性，如果需要修改原型的属性时，则可以用: b.prototype.x = 2；但是这样会造成所有继承于该对象的实例的属性发生改变。
+
+
+### 7. 继承（原型链继承）
+
+> 概念：在 JS 中，继承通常指的便是 原型链继承，也就是通过指定原型，并可以通过原型链继承原型上的属性或者方法。原型链是实现继承最原始的模式，即通过prototype属性实现继承。将父类的实例作为子类的原型。常用的有6种继承方式：  
+
+- 原型链继承
+- 借用构造函数继承
+- 组合继承（组合原型链继承和借用构造函数继承）（常用）
+- 原型式继承
+- 寄生式继承
+- 寄生组合式继承（常用）
+
+### 8. 执行上下文(EC)和执行栈
+
+- 执行上下文: 就是当前 JavaScript 代码被解析和执行时所在环境的抽象概念， JavaScript 中运行任何的代码都是在执行上下文中运行。执行上下文的生命周期包括三个阶段：创建阶段→执行阶段→回收阶段
+- 执行栈: JavaScript 引擎创建了执行栈来管理执行上下文。可以把执行栈认为是一个存储函数调用的栈结构，遵循先进后出的原则。
+
+### 9. 作用域与作用域链
+
+- 作用域: 执行上下文中还包含作用域链。作用域其实可理解为该上下文中声明的变量和声明的作用范围。可分为 块级作用域 和 函数作用域( 也可理解为：作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作   用域下同名变量不会有冲突。)
+- 作用域链：作用域链可以理解为一组对象列表，包含 父级和自身的变量对象，因此我们便能通过作用域链访问到父级里声明的变量或者函数。我们知道，我们可以在执行上下文中访问到父级甚至全局的变量，这便是作用域链的功劳。
+
+### 10. 闭包
+
+> 概念：定义在函数内部的函数。里面的函数可以访问外面函数的变量，外面的变量的是这个内部函数的一部分。（其他说法：闭包属于一种特殊的作用域，称为 静态作用域。它的定义可以理解为: 父函数被销毁 的情况下，返回出的子函数的[[scope]]中仍然保留着> 父级的单变量对象和作用域链，因此可以继续访问到父级的变量对象，这样的函数称为闭包。）
+
+- 作用：1.使用闭包可以访问函数中的变量。2.可以使变量长期保存在内存中，生命周期比较长。
+- 缺点：闭包不能滥用，否则会导致内存泄露，影响网页的性能。
+- 应用场景：1.函数作为参数传递。2.函数作为返回值
+
+### 11. 浅拷贝与深拷贝
+
+- 浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一块内存。
+- 深拷贝就是在拷贝数据的时候，将数据的所有引用结构都拷贝一份。简单的说就是，在内存中存在两个数据结构完全相同又相互独立的数据，将引用型类型进行复制，而不是只复制其引用关系。
+
+[具体实现方式参考,请点击此处](https://blog.csdn.net/weixin_38008863/article/details/87902901)
+
+### 12. require与import的区别
+
+- require 支持动态导入，属于同步导入，是值拷贝，导出值变化不会影响导入值。
+- import  不支持动态导入，正在提案 (babel 下可支持), 属于 异步 导入, 指向内存地址，导入值会随导出值而变化。
+
+### 13. 防抖与节流
+
+> 防抖与节流函数是一种最常用的 高频触发优化方式，能对性能有较大的帮助。
+
+- 防抖 (debounce): 将多次高频操作优化为只在最后一次执行，通常使用的场景是：用户输入，只需再输入完成后做一次输入校验即可。
+
+```javascript
+
+function debounce(fn, wait, immediate) {
+    let timer = null
+
+    return function() {
+        let args = arguments
+        let context = this
+
+        if (immediate && !timer) {
+            fn.apply(context, args)
+        }
+
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+            fn.apply(context, args)
+        }, wait)
+    }
+}
+
+```
+
+- 节流(throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可。
+
+```javascript
+
+function throttle(fn, wait, immediate) {
+    let timer = null
+    let callNow = immediate
+    
+    return function() {
+        let context = this,
+            args = arguments
+
+        if (callNow) {
+            fn.apply(context, args)
+            callNow = false
+        }
+
+        if (!timer) {
+            timer = setTimeout(() => {
+                fn.apply(context, args)
+                timer = null
+            }, wait)
+        }
+    }
+}
+
+```
+
+### 14. AST
+
+> 抽象语法树 (Abstract Syntax Tree)，是将代码逐字母解析成 树状对象 的形式。这是语言之间的转换、代码语法检查，代码风格检查，代码格式化，代码高亮，代码错误提示，代码自动补全等等的基础。
+
+### 15. babel编译原理
+
+- babylon 将 ES6/ES7 代码解析成 AST
+- babel-traverse 对 AST 进行遍历转译，得到新的 AST
+- 新 AST 通过 babel-generator 转换成 ES5
+
+### 16. 函数柯里化
+
+> 在一个函数中，首先填充几个参数，然后再返回一个新的函数的技术，称为函数的柯里化。通常可用于在不侵入函数的前提下，为函数 预置通用参数，供多次重复调用。
+
+```javascript
+
+const add = function add(x) {
+	return function (y) {
+		return x + y
+	}
+}
+
+const add1 = add(1)
+
+add1(2) === 3
+add1(20) === 21
+
+```
+
+### 17. Array 常见操作方法
+
+- map: 遍历数组，返回回调返回值组成的新数组
+
+- forEach: 无法break，可以用try/catch中throw new Error来停止
+
+- filter: 过滤
+
+- some: 有一项返回true，则整体为true
+
+- every: 有一项返回false，则整体为false
+
+- join: 通过指定连接符生成字符串
+
+- push / pop: 末尾推入和弹出，改变原数组， 返回推入/弹出项
+
+- unshift / shift: 头部推入和弹出，改变原数组，返回操作项
+
+- sort(fn) / reverse: 排序与反转，改变原数组
+
+- concat: 连接数组，不影响原数组， 浅拷贝
+
+- slice(start, end): 返回截断后的新数组，不改变原数组
+
+- splice(start, number, value...): 返回删除元素组成的数组，value 为插入项，改变原数组
+
+- indexOf / lastIndexOf(value, fromIndex): 查找数组项，返回对应的下标
+
+- reduce / reduceRight(fn(prev, cur)， defaultPrev): 两两执行，prev 为上次化简函数的return值，cur 为当前值(从第二项开始)
+
+- flat： 数组拆解， flat: [1,[2,3]] --> [1, 2, 3]
+
+### 18. Object 常见操作方法
+
+- Object.keys(obj): 获取对象的可遍历属性(键)
+
+- Object.values(obj): 获取对象的可遍历属性值(值)
+
+- Object.entries(obj): 获取对象的可遍历键值对
+
+- Object.assign(targetObject,...object): 合并对象可遍历属性
+
+- Object.is(value1,value2): 判断两个值是否是相同的值
+
+详细参考，请点击 [js对象方法大全](https://blog.csdn.net/qq_26562641/article/details/88575516?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1)
+
 
 
 ## 第二部分. Vue
@@ -306,6 +538,24 @@ queryString.parse(this.props.location.search)
 
 - Vue (响应式+依赖收集)对于响应式属性的更新，只会精确更新依赖收集的当前组件，个组件都有自己的渲染 watcher，而不会递归的去更新子组件。
 - React 在类似的场景下是自顶向下的进行递归更新的，也就是说，React 中假如 ChildComponent 里还有十层嵌套子元素，那么所有层次都会递归的重新render（在不进行手动优化的情况下），这是性能上的灾难。（因此，React 创造了Fiber，创造了异步渲染，其实本质上是弥补被自己搞砸了的性能）。他们能用收集依赖的这套体系吗？不能，因为他们遵从Immutable的设计思想，永远不在原对象上修改属性，那么基于 Object.defineProperty 或 Proxy 的响应式依赖收集机制就无从下手了（你永远返回一个新的对象，我哪知道你修改了旧对象的哪部分？）同时，由于没有响应式的收集依赖，React 只能递归的把所有子组件都重新 render一遍（除了memo和shouldComponentUpdate这些优化手段），然后再通过 diff算法 决定要更新哪部分的视图，这个递归的过程叫做 reconciler，听起来很酷，但是性能很灾难。
+
+
+## 第四部分. 浏览器
+
+### 1. 从输入 url 到展示的过程
+
+- DNS 解析
+- TCP 三次握手
+- 发送请求，分析 url，设置请求报文(头，主体)
+- 服务器返回请求的文件 (html)
+- 浏览器渲染 
+
+
+
+## 参考资料
+
+- [中高级前端大厂面试秘籍，为你保驾护航金三银四，直通大厂(上) - 掘金](https://juejin.im/post/5c64d15d6fb9a049d37f9c20#heading-30)
+- [JavaScript 面试 20 个核心考点 ](https://mp.weixin.qq.com/s?__biz=MzU3MDAyNDgwNA==&mid=2247484912&idx=1&sn=4b91963d14bfc9f5d7799525bebf423c&scene=19#wechat_redirect)
 
 
 
