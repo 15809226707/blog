@@ -307,8 +307,110 @@ add1(20) === 21
 详细参考，请点击 [js对象方法大全](https://blog.csdn.net/qq_26562641/article/details/88575516?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1)
 
 
+## 第二部分. 浏览器与服务端
 
-## 第二部分. Vue
+### 1. http协议
+>
+> HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。属于应用层的 >  面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。
+>
+
+### 2. HTTPS的工作原理
+>
+> 非对称加密与对称加密双剑合璧，使用非对称加密算法传递用于对称加密算法的密钥，然后使用对称加密算法进行信息传递。这样既安全又高效
+>
+
+### 3. 在浏览器地址栏键入URL，按下回车之后会经历以下流程
+
+- DNS 解析（浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址）
+- 建立TCP连接 (三次握手）
+- 发送请求，分析 url，设置请求报文(头，主体)
+- 服务器返回请求的文件 (html)
+- 释放 TCP连接（四次挥手）
+- 浏览器渲染 html 文本并显示内容 
+
+### 4. get和post请求的区别
+
+- get : 缓存、不安全、请求长度受限不能超过4k、会被历史保存记录
+- post: 不会缓存、安全、请求数据大小不受限、更多编码类型
+
+
+### 5. 常见状态码
+
+- 1xx: 接受，继续处理
+- 200: 成功，并返回数据
+- 201: 已创建
+- 202: 已接受
+- 203: 成为，但未授权
+- 204: 成功，无内容
+- 205: 成功，重置内容
+- 206: 成功，部分内容
+- 301: 永久移动，重定向
+- 302: 临时移动，可使用原有URI
+- 304: 资源未修改，可使用缓存
+- 305: 需代理访问
+- 400: 请求语法错误
+- 401: 要求身份认证
+- 403: 拒绝请求
+- 404: 资源不存在
+- 500: 服务器错误
+
+### 6. Websocket
+
+>
+> 概念：WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。它是一个 持久化的协议， 基于 http ， 服务端可以 主动 push
+>
+
+```javascript
+
+new WebSocket(url)
+
+ws.onerror = fn
+
+ws.onclose = fn
+
+ws.onopen = fn
+
+ws.onmessage = fn
+
+ws.send()
+
+```
+
+### 7. 跨域
+
+>
+>概念：跨域是指浏览器不能执行其他网站的脚本。它是由浏览器的同源策略（域名、协议、端口均为相同）造成的，是浏览器对JavaScript实施的安全限制。
+>
+
+- JSONP: 利用<script>标签不受跨域限制的特点，缺点是只能支持 get 请求。
+- 设置 CORS: Access-Control-Allow-Origin：*
+- postMessage
+
+```javascript
+
+// JSONP方式
+function jsonp(url, jsonpCallback, success) {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.type = 'text/javascript'
+  window[jsonpCallback] = function(data) {
+    success && success(data)
+  }
+  document.body.appendChild(script)
+}
+
+
+```
+
+### 8. 安全
+
+- XSS攻击: 注入恶意代码。 （解决方法：1.cookie 设置 httpOnly; 2.转义页面上的输入内容和输出内容）
+- CSRF: 跨站请求伪造，防护。（解决办法：1.get 不修改数据；2.不被第三方网站访问到用户的 cookie； 3. 设置白名单，不被第三方网站请求；4.请求加校验）
+
+
+
+## 第三部分. Vue
 
 ### 1. 概念
 
@@ -482,7 +584,7 @@ keep-alive的中还运用了LRU(Least Recently Used)算法。
 > Module --- Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割。
 
 
-## 第三部分. React
+## 第四部分. React
 
 ### 1. 概念
 
@@ -532,7 +634,7 @@ queryString.parse(this.props.location.search)
 ```
 
 
-## 第四部分. Vue&React
+## 第五部分. Vue和React对比
 
 ### 1. 为什么说Vue 的响应式更新比 React 快？
 
@@ -540,106 +642,6 @@ queryString.parse(this.props.location.search)
 - React 在类似的场景下是自顶向下的进行递归更新的，也就是说，React 中假如 ChildComponent 里还有十层嵌套子元素，那么所有层次都会递归的重新render（在不进行手动优化的情况下），这是性能上的灾难。（因此，React 创造了Fiber，创造了异步渲染，其实本质上是弥补被自己搞砸了的性能）。他们能用收集依赖的这套体系吗？不能，因为他们遵从Immutable的设计思想，永远不在原对象上修改属性，那么基于 Object.defineProperty 或 Proxy 的响应式依赖收集机制就无从下手了（你永远返回一个新的对象，我哪知道你修改了旧对象的哪部分？）同时，由于没有响应式的收集依赖，React 只能递归的把所有子组件都重新 render一遍（除了memo和shouldComponentUpdate这些优化手段），然后再通过 diff算法 决定要更新哪部分的视图，这个递归的过程叫做 reconciler，听起来很酷，但是性能很灾难。
 
 
-## 第四部分. 浏览器与服务端
-
-### 1. http协议
->
-> HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。属于应用层的 >  面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。
->
-
-### 2. HTTPS的工作原理
->
-> 非对称加密与对称加密双剑合璧，使用非对称加密算法传递用于对称加密算法的密钥，然后使用对称加密算法进行信息传递。这样既安全又高效
->
-
-### 3. 在浏览器地址栏键入URL，按下回车之后会经历以下流程
-
-- DNS 解析（浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址）
-- 建立TCP连接 (三次握手）
-- 发送请求，分析 url，设置请求报文(头，主体)
-- 服务器返回请求的文件 (html)
-- 释放 TCP连接（四次挥手）
-- 浏览器渲染 html 文本并显示内容 
-
-### 4. get和post请求的区别
-
-- get : 缓存、不安全、请求长度受限不能超过4k、会被历史保存记录
-- post: 不会缓存、安全、请求数据大小不受限、更多编码类型
-
-
-### 5. 常见状态码
-
-- 1xx: 接受，继续处理
-- 200: 成功，并返回数据
-- 201: 已创建
-- 202: 已接受
-- 203: 成为，但未授权
-- 204: 成功，无内容
-- 205: 成功，重置内容
-- 206: 成功，部分内容
-- 301: 永久移动，重定向
-- 302: 临时移动，可使用原有URI
-- 304: 资源未修改，可使用缓存
-- 305: 需代理访问
-- 400: 请求语法错误
-- 401: 要求身份认证
-- 403: 拒绝请求
-- 404: 资源不存在
-- 500: 服务器错误
-
-### 6. Websocket
-
->
-> 概念：WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。它是一个 持久化的协议， 基于 http ， 服务端可以 主动 push
->
-
-```javascript
-
-new WebSocket(url)
-
-ws.onerror = fn
-
-ws.onclose = fn
-
-ws.onopen = fn
-
-ws.onmessage = fn
-
-ws.send()
-
-```
-
-### 7. 跨域
-
->
->概念：跨域是指浏览器不能执行其他网站的脚本。它是由浏览器的同源策略（域名、协议、端口均为相同）造成的，是浏览器对JavaScript实施的安全限制。
->
-
-- JSONP: 利用<script>标签不受跨域限制的特点，缺点是只能支持 get 请求。
-- 设置 CORS: Access-Control-Allow-Origin：*
-- postMessage
-
-```javascript
-
-// JSONP方式
-function jsonp(url, jsonpCallback, success) {
-  const script = document.createElement('script')
-  script.src = url
-  script.async = true
-  script.type = 'text/javascript'
-  window[jsonpCallback] = function(data) {
-    success && success(data)
-  }
-  document.body.appendChild(script)
-}
-
-
-```
-
-### 8. 安全
-
-- XSS攻击: 注入恶意代码。 （解决方法：1.cookie 设置 httpOnly; 2.转义页面上的输入内容和输出内容）
-- CSRF: 跨站请求伪造，防护。（解决办法：1.get 不修改数据；2.不被第三方网站访问到用户的 cookie； 3. 设置白名单，不被第三方网站请求；4.请求加校验）
 
 
 ## 参考资料
