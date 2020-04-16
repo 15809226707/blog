@@ -4,7 +4,7 @@
 ## 前言
 
 >
->本篇主要是为了方便自己查阅学习，将前端常涉及的知识做一个完整的归类总结。
+>本篇主要是为了方便自己查阅学习，将前端常面试涉及的知识点做一个完整的归类总结。
 >
 >
 
@@ -15,6 +15,7 @@
 ### 1. js数据类型
 
 - 基本数据类型：Boolean、Number、String、undefined、Null、Symbol (ES6新增，表示独一无二的值)
+
 - 引用数据类型：Object、Array、Function
 
 ### 2. 数据类型判断
@@ -27,14 +28,23 @@
 ```javascript
 
 Object.prototype.toString.call();               // [object String]
+
 Object.prototype.toString.call(1);              // [object Number]
+
 Object.prototype.toString.call(true);           // [object Boolean]
+
 Object.prototype.toString.call(undefined);      // [object Undefined]
+
 Object.prototype.toString.call(null);           // [object Null]
+
 Object.prototype.toString.call(new Function()); // [object Function]
+
 Object.prototype.toString.call(new Date());     // [object Date]
+
 Object.prototype.toString.call([]);             // [object Array]
+
 Object.prototype.toString.call(new RegExp());   // [object RegExp]
+
 Object.prototype.toString.call(new Error());    // [object Error]
 
 ```
@@ -45,16 +55,23 @@ Object.prototype.toString.call(new Error());    // [object Error]
 >它们的作用是一样的，都是用来改变函数中this的指向。
 
 1. 方法定义：
+
 - apply：调用一个对象的一个方法，用另一个对象替换当前对象。例如：B.apply(A, arguments);即A对象应用B对象的方法。
 - call：调用一个对象的一个方法，用另一个对象替换当前对象。例如：B.call(A, args1,args2);即A对象调用B对象的方法。
+
 2. call 与 apply 的相同点：
+
 - 方法的含义是一样的，即方法功能是一样的；
 - 第一个参数的作用是一样的；
+
 3. call 与 apply 的不同点：
+
 - 两者传入的列表形式不一样
 - call可以传入多个参数；
 - apply只能传入两个参数，所以其第二个参数往往是作为数组形式传入
+
 4. bind的传参方式和call一样，只不过它的不同之处是，apply和call方法调用之后会立即执行，而bind方法调用之后会返回一个新的函数，它并不会立即执行，需要我们手动执行。
+
 5. 存在的意义：
 - 实现（多重）继承
    
@@ -108,9 +125,13 @@ Function.prototype.myApply = function(context=window) {
 > this的值是在执行的时候才能确认，定义的时候不能确认。 因为this是执行上下文环境的一部分，而执行上下文需要在代码执行之前确定，而不是定义的时候。
 
 - 对于直接调用 foo 来说，不管 foo 函数被放在了什么地方，this 一定是 window
+
 - 对于 obj.foo() 来说，我们只需要记住，谁调用了函数，谁就是 this，所以在这个场景下 foo 函数中的 this 就是 obj 对象
+
 - 在构造函数模式中，类中(函数体中)出现的this.xxx=xxx中的this是当前类的一个实例
+
 - call、apply和bind：this 是第一个参数
+
 - 箭头函数this指向:箭头函数没有自己的this，看其外层的是否有函数，如果有，外层函数的this就是内部箭头函数的this，如果没有，则this是window。
 
 
@@ -233,7 +254,7 @@ function throttle(fn, wait, immediate) {
 
 ### 14. AST
 
-> 抽象语法树 (Abstract Syntax Tree)，是将代码逐字母解析成 树状对象 的形式。这是语言之间的转换、代码语法检查，代码风格检查，代码格式化，代码高亮，代码错误提示，代码自动补全等等的基础。
+抽象语法树 (Abstract Syntax Tree)，是将代码逐字母解析成 树状对象 的形式。这是语言之间的转换、代码语法检查，代码风格检查，代码格式化，代码高亮，代码错误提示，代码自动补全等等的基础。
 
 ### 15. babel编译原理
 
@@ -243,7 +264,7 @@ function throttle(fn, wait, immediate) {
 
 ### 16. 函数柯里化
 
-> 在一个函数中，首先填充几个参数，然后再返回一个新的函数的技术，称为函数的柯里化。通常可用于在不侵入函数的前提下，为函数 预置通用参数，供多次重复调用。
+在一个函数中，首先填充几个参数，然后再返回一个新的函数的技术，称为函数的柯里化。通常可用于在不侵入函数的前提下，为函数 预置通用参数，供多次重复调用。
 
 ```javascript
 
@@ -259,8 +280,25 @@ add1(2) === 3
 add1(20) === 21
 
 ```
+### 17. ES6/ES7常用属性及方法
 
-### 17. Array 常见操作方法
+声明：
+
+- let: 声明变量，块级作用域、不存在变量提升、暂时性死区、不允许重复声明
+- const: 声明常量，只读无法修改
+
+解构赋值：
+
+- class / extend: 类声明与继承
+- Set / Map: 新的数据结构
+
+异步解决方案：
+
+- Promise的使用与实现
+- generator： yield: 暂停代码 ； next(): 继续执行代码
+
+
+### 18. Array 常见操作方法
 
 - map: 遍历数组，返回回调返回值组成的新数组
 
@@ -292,7 +330,7 @@ add1(20) === 21
 
 - flat： 数组拆解， flat: [1,[2,3]] --> [1, 2, 3]
 
-### 18. Object 常见操作方法
+### 19. Object 常见操作方法
 
 - Object.keys(obj): 获取对象的可遍历属性(键)
 
@@ -543,21 +581,26 @@ directives: {
 <input v-focus>
 
 ```
+ 一个指令定义对象可以提供如下几个钩子函数 (均为可选)：
 
-> 一个指令定义对象可以提供如下几个钩子函数 (均为可选)：
-> - bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
-> - inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
-> - update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。
-> - componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
-> - unbind：只调用一次，指令与元素解绑时调用。
+ - bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+
+ - inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+
+ - update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。
+
+ - componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+
+ - unbind：只调用一次，指令与元素解绑时调用。
 
 ### 10. vue-router路由传参
 
-> 提供了两种传参方式:
-> - query传参（问号传参）
->  路由映射表不用改动 :to={path:'',query:{}}或者:to={name:'',query:{}}
-> - params传参（路径传参）
->  在映射表中添加  /:变量  的形式； :to={name:'',params:{变量:''}}}
+提供了两种传参方式:
+
+- query传参（问号传参）： 路由映射表不用改动 :to={path:'',query:{}}或者:to={name:'',query:{}}
+
+- params传参（路径传参）： 在映射表中添加  /:变量  的形式； :to={name:'',params:{变量:''}}}
+
 
 
 ### 11. 接口请求一般放在哪个生命周期中？
@@ -568,6 +611,7 @@ directives: {
 
 - Computed本质是一个具备缓存的watcher，依赖的属性发生变化就会更新视图。
   适用于计算比较消耗性能的计算场景。当表达式过于复杂时，在模板中放入过多逻辑会让模板难以维护，可以将复杂的逻辑放入计算属性中处理。
+
 - Watch没有缓存性，更多的是观察的作用，可以监听某些数据执行回调。当我们需要深度监听对象中的属性时，可以打开deep：true选项，这样便会对对象中的每一项进行监听。这样会带来性能问题，优化的话可以使用字符串形式监听，如果没有写到组件中，不要忘记使用unWatch手动注销哦。
 
 ### 13. v-if和v-show的区别
@@ -583,7 +627,9 @@ directives: {
 简单说，Vue的编译过程就是将template转化为render函数的过程。会经历以下阶段：
 
 - 生成AST树（解析模版，生成AST语法树(一种用JavaScript对象的形式来描述整个模板)）
+
 - 优化
+
 - codegen
 
 ### 16. 路由的两种实现原理
@@ -656,14 +702,18 @@ keep-alive的中还运用了LRU(Least Recently Used)算法。
 
 ### 21. Vuex
 
-- 概念
-> Vuex 是一个专为 Vue应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
-- 结构
-> State ---单一状态
-> Getter --- Vuex 允许我们在 store 中定义“getter”（可以认为是 store 的计算属性）。就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
-> Mutation --- 更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数
-> Action --- Action 提交的是 mutation，而不是直接变更状态， Action 可以包含任意异步操作。
-> Module --- Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割。
+> 概念: Vuex 是一个专为 Vue应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
+
+结构:
+- State ---单一状态
+
+- Getter --- Vuex 允许我们在 store 中定义“getter”（可以认为是 store 的计算属性）。就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+
+- Mutation --- 更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数
+
+- Action --- Action 提交的是 mutation，而不是直接变更状态， Action 可以包含任意异步操作。
+
+- Module --- Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块——从上至下进行同样方式的分割。
 
 
 ## 第四部分. React
@@ -675,20 +725,26 @@ React 是一个声明式，高效且灵活的用于构建用户界面的 JavaScr
 ### 2. 生命周期
 
 - componentWillMount: 在渲染前调用,在客户端也在服务端。
+
 - componentDidMount : 在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
+
 - componentWillReceiveProps: 在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
+
 - shouldComponentUpdate: 返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。 
   可以在你确认不需要更新组件时使用。
+
 - componentWillUpdate:在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用。
+
 - componentDidUpdate: 在组件完成更新后立即调用。在初始化时不会被调用。
+
 - componentWillUnmount:在组件从 DOM 中移除之前立刻被调用。
 
 
-> 注意：在新版本中，React 官方对生命周期有了新的 变动建议:
->
-> 使用 getDerivedStateFromProps 替换 componentWillMount；
-> 使用 getSnapshotBeforeUpdate替换 componentWillUpdate；
-> 避免使用 componentWillReceiveProps；
+在新版本中，React 官方对生命周期有了新的 变动建议:
+
+- 使用 getDerivedStateFromProps 替换 componentWillMount；
+- 使用 getSnapshotBeforeUpdate替换 componentWillUpdate；
+- 避免使用 componentWillReceiveProps；
 
 新版的建议生命周期如下:
 
@@ -939,15 +995,15 @@ function ListReducer(state = initList, action) {
 }
 
 ```
-> 注意:
->> 1.遵守数据不可变，不要去直接修改 state，而是返回出一个 新对象，可以使用 assign / copy / extend / 解构 等方式创建新对象；
->> 2.默认情况下需要 返回原数据，避免数据被清空；
->> 3.最好设置 初始值，便于应用的初始化及数据稳定；
+注意:
+- 遵守数据不可变，不要去直接修改 state，而是返回出一个 新对象，可以使用 assign / copy / extend / 解构 等方式创建新对象；
+- 默认情况下需要 返回原数据，避免数据被清空；
+- 最好设置 初始值，便于应用的初始化及数据稳定；
 
 
 结合React使用 React-Redux：
 
-- <Provider>: 将 store 通过 context 传入组件中。
+- Provider: 将 store 通过 context 传入组件中。
 
 - connect: 一个高阶组件，可以方便在 React 组件中使用 Redux。
 
@@ -959,9 +1015,13 @@ function ListReducer(state = initList, action) {
 
 - 异步 Action: 由于 Reducer 是一个严格的纯函数，因此无法在 Reducer 中进行数据的请求，需要先获取数据，再dispatch(Action)即可，下面是三种不同的异步实现:
 
-> redex-thunk
-> redux-saga
-> redux-observable
+```
+redex-thunk
+redux-saga
+redux-observable
+
+```
+
 
 
 
