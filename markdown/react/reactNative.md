@@ -3,22 +3,27 @@
 
 
 
-## 官方文档 ：[https://reactnative.cn/docs/getting-started](https://reactnative.cn/docs/getting-started)
+官方文档 ：[https://reactnative.cn/docs/getting-started](https://reactnative.cn/docs/getting-started)
 
 
-## Windows & Android 需要的环境
+Windows & Android 需要的环境：
 
-- [Node](https://nodejs.org/en/download/)
+- [Node](https://nodejs.org/en/download/) ：
+
 Node 是 JS 的运行环境,这里注意需要下载的 Node 版本需要8.3以上。
-- [Python 2](https://www.python.org/downloads/)
+
+- [Python 2](https://www.python.org/downloads/) ：
+
 Python 2的运行环境，这里注意需要下载的python版本为 python 2.x ，不能是 python 3.x。
-- [JDK](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
+
+- [JDK](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html) ：
+
 Java的运行环境，这里注意需要下载的JDK版本为1.8，只能是1.8。
 
 
-## 环境配置
+## 1. 环境配置
 
-### 1. 安装NodeJs
+### 1-1. 安装NodeJs
 
 由于React Native中有一些工具，例如react-native-cli，是要npm来安装，所以先得安装NodeJs。对于NodeJs的版本要求是必须高于8.3。
 
@@ -27,7 +32,7 @@ Java的运行环境，这里注意需要下载的JDK版本为1.8，只能是1.8�
 直接下载最新版本，可以下载绿色解压版本，也可以下载安装版本。按自己系统位数选择下载并安装
 
 
-### 2. 安装Python2
+### 1-2. 安装Python2
 
 注意Python的版本必须是2.x系列的。
 
@@ -35,7 +40,7 @@ Python的官网下载地址为：[https://www.python.org/downloads/](https://www
 
 也是直接下载2.x系列的最新版本。下载下来的一个安装文件，直接一步一步安装即可，安装好后，设置环境变量即可。
 
-### 3. 安装 JDK
+### 1-3. 安装 JDK
 
 React Native要求JDK的版本为1.8。
 
@@ -43,7 +48,7 @@ React Native要求JDK的版本为1.8。
 
 选择本系统合适的版本，下载下来的一个安装文件，直接一步一步安装即可，安装好后，设置环境变量即可。
 
-### 4. 安装Android环境
+### 1-4. 安装Android环境
 
 安装Android环境，首先先安装Android Studio。
 
@@ -55,7 +60,7 @@ React Native要求JDK的版本为1.8。
 
 点击“Finish”后，开始自动下载SDK，此时根据网速的快慢，决定这个步骤的时间的长短，下载完成后，则会进行Android Studio的欢迎画面。
 
-### 5. 配置ANDROID_HOME环境变量
+### 1-5. 配置ANDROID_HOME环境变量
 
 React Native 需要通过环境变量来了解你的 Android SDK 装在什么路径，从而正常进行编译。
 
@@ -88,9 +93,9 @@ c:\Users\你的用户名\AppData\Local\Android\Sdk
 
 ```
 
-## 创建项目
+## 2. 创建项目
 
-### 1. 安装React-Native-Cli
+### 2-1. 安装React-Native-Cli
 
 React-Native-Cli工具是要通npm来安装，即在cmd窗口中输入如下命令：
 
@@ -99,7 +104,7 @@ npm install -g react-native-cli
 
 ```
 
-### 2. 在cmd命令中执行如下如下命令，创建一个reactNativeDemo的项目，即：
+### 2-2. 在cmd命令中执行如下如下命令，创建一个reactNativeDemo的项目，即：
 
 ```
 react-native init reactNativeDemo
