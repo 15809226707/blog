@@ -531,14 +531,12 @@ promise
 ```javascript
 
 //get请求方式
-function get(url,fn){
-        // XMLHttpRequest对象用于在后台与服务器交换数据
+function get(url, fn){
         var xhr=new XMLHttpRequest();
-        xhr.open('GET',url,false);
+        xhr.open('GET', url, false);
         xhr.onreadystatechange=function(){
             if(xhr.readyState === 4){
                 if(xhr.status === 200){
-                    //console.log(xhr.responseText);
                     fn.call(xhr.responseText);
                 }
             }
@@ -547,15 +545,14 @@ function get(url,fn){
     }
 
 //post请求方式
-function post(url,data,fn){
+function post(url, data, fn){
         var xhr=new XMLHttpRequest();
-        xhr.open('POST',url,false);
+        xhr.open('POST', url, false);
         // 添加http头，发送信息至服务器时内容编码类型
         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
         xhr.onreadystatechange=function(){
             if (xhr.readyState === 4){
                 if (xhr.status === 200){
-                    // console.log(xhr.responseText);
                     fn.call(xhr.responseText);
                 }
             }
