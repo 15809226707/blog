@@ -506,7 +506,7 @@ Promise 的常用 API 如下：
 
 const promise = new Promise((resolve, reject) => {
     try{
-       resolve('success1')
+       resolve('success')
     }catch(err){
         reject('error')
     }
@@ -536,9 +536,8 @@ function get(url,fn){
         var xhr=new XMLHttpRequest();
         xhr.open('GET',url,false);
         xhr.onreadystatechange=function(){
-            // readyState == 4说明请求已完成
-            if(xhr.readyState==4){
-                if(xhr.status==200 || xhr.status==304){
+            if(xhr.readyState === 4){
+                if(xhr.status === 200){
                     //console.log(xhr.responseText);
                     fn.call(xhr.responseText);
                 }
@@ -554,8 +553,8 @@ function post(url,data,fn){
         // 添加http头，发送信息至服务器时内容编码类型
         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
         xhr.onreadystatechange=function(){
-            if (xhr.readyState==4){
-                if (xhr.status==200 || xhr.status==304){
+            if (xhr.readyState === 4){
+                if (xhr.status === 200){
                     // console.log(xhr.responseText);
                     fn.call(xhr.responseText);
                 }
@@ -1272,7 +1271,7 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 - module: 是开发中的单个模块，一个模块对应一个文件，webpack会从配置的entry中递归开始找出所有依赖的模块
 
-### 6. 什么是loader？ 什么是plugin？两者的不同
+### 6. 什么是loader, 什么是plugin, 两者的不同
 
 概念：
 
@@ -1288,7 +1287,7 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 > loader是用来对模块的源代码进行转换,而plugin目的在于解决 loader 无法实现的其他事，因为plugin可以在任何阶段调用,能够跨Loader进一步加工Loader的输出
 
-### 7. 常见的plugin和常见的loader有哪些，有什么作用？
+### 7. 常见的plugin和常见的loader有哪些，有什么作用
 
 plugin:
 
@@ -1312,7 +1311,7 @@ loader:
 - style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS。
 - eslint-loader：通过 ESLint 检查 JavaScript 代码
 
-### 8. 什么是模块热更新？
+### 8. 什么是模块热更新
 
 Webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。devServer中通过hot属性可以空时模块的热替换。
 
@@ -1335,15 +1334,15 @@ module.exports = config;
 
 ```
 
-### 9. webpack-dev-server和http服务器如nginx有什么区别?
+### 9. webpack-dev-server和http服务器如nginx有什么区别
 
 webpack-dev-server使用内存来存储webpack开发环境下的打包文件。并且可以使用模块热更新，他比传统的http服务对开发更加简单高效。
 
-### 10. 在Webpack中如何做到长缓存优化？
+### 10. 在Webpack中如何做到长缓存优化
 
 浏览器在用户访问页面的时候，为了加快加载速度会对用户访问的静态资源进行存储，但是每一次代码升级或更新都需要浏览器下载新的代码，最简单方便的方式就是引入新的文件名称。webpack中可以在output中指定chunkhash，并且分离经常更新的代码和框架代码。通过NameModulesPlugin或HashedModuleIdsPlugin使再次打包文件名不变。
 
-### 11. Webpack如何配置单页面和多页面的应用程序？
+### 11. Webpack如何配置单页面和多页面的应用程序
 
 ```javascript
 
@@ -1361,7 +1360,7 @@ webpack-dev-server使用内存来存储webpack开发环境下的打包文件。�
 
 ```
 
-### 12. 如何提高Webpack的构建速度?
+### 12. 如何提高Webpack的构建速度
 
 - 多入口情况下，使用CommonsChunkPlugin来提取公共代码
 
@@ -1375,7 +1374,7 @@ webpack-dev-server使用内存来存储webpack开发环境下的打包文件。�
 
 - 使用Tree-shaking和Scope Hoisting来剔除多余代码
 
-### 13. 如何利用Webpack来优化前端性能？（提高性能和体验）
+### 13. 如何利用Webpack来优化前端性能（提高性能和体验）
 
 - 压缩代码。删除多余的代码、注释、简化代码的写法等等方式。可以利用webpack的UglifyJsPlugin和ParallelUglifyPlugin来压缩JS文件， 利用cssnano（css-loader?minimize）来压缩css
 
