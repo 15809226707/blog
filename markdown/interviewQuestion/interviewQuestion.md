@@ -1402,6 +1402,14 @@ import { first } from './data.json' // 打包时只会把first相关的打进去
 
 - ExtractTextWebpackPlugin调整，建议选用新的CSS文件提取kiii插件mini-css-extract-plugin，production模式，增加 minimizer
 
+## 第七部分. HTML && CSS(不做整理，推荐其他)
+
+## 1. [前端基础面试题(HTML+CSS部分)](https://zhuanlan.zhihu.com/p/28415923)
+
+## 2. [web前端面试中10个关于css高频面试题,你都会吗?](https://cloud.tencent.com/developer/article/1476141)
+
+## 3. [2019 CSS经典面试题（史上最全，持续更新中...）](https://blog.csdn.net/weixin_33691817/article/details/91392503)
+
 
 ## 参考资料
 
