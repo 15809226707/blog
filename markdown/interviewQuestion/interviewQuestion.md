@@ -1381,7 +1381,7 @@ webpack-dev-server使用内存来存储webpack开发环境下的打包文件。�
 
 - 提取公共代码
 
-### 14. Webpack3和Webpack4的区别
+### 14. Webpack4有哪些变化
 
 - mode/–mode参数，新增了mode/--mode参数来表示是开发还是生产（development/production）。production 侧重于打包后的文件大小，development侧重于goujiansud
 
