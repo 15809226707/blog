@@ -175,12 +175,60 @@ Function.prototype.myApply = function(context=window) {
 - 缺点：闭包不能滥用，否则会导致内存泄露，影响网页的性能。
 - 应用场景：1.函数作为参数传递。2.函数作为返回值
 
+```javascript
+
+/**
+*JavaScript中的函数会形成了闭包。
+*闭包是由函数以及声明该函数的词法环境组合而成的。该环境包含了这个闭包创建时作用域内的任何局部变量。
+**/
+
+function foo(){
+  var num = 1
+  function compute(){
+    num++
+    return num
+  }
+  return compute
+}
+
+var fn = foo()
+fn()
+
+// num 变量和 compute 函数就组成了一个闭包
+
+```
+
 ### 11. 浅拷贝与深拷贝
 
-- 浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一块内存。
-- 深拷贝就是在拷贝数据的时候，将数据的所有引用结构都拷贝一份。简单的说就是，在内存中存在两个数据结构完全相同又相互独立的数据，将引用型类型进行复制，而不是只复制其引用关系。
+浅拷贝：
 
-[具体实现方式参考,请点击此处](https://blog.csdn.net/weixin_38008863/article/details/87902901)
+a. 概念：浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一块内存。修改时原对象也会受到影响。
+
+b. 方法：
+
+- 利用 = 赋值操作符实现浅拷贝。
+
+- 数组的浅拷贝一般使用 slice、concat。
+
+- 数组浅拷贝 - 遍历 。
+
+- 对象浅拷贝 - Object.assign()。
+
+- 对象浅拷贝 - 扩展运算符
+
+深拷贝：
+
+a. 概念：深拷贝就是在拷贝数据的时候，将数据的所有引用结构都拷贝一份。简单的说就是，在内存中存在两个数据结构完全相同又相互独立的数据，将引用型类型进行复制，而不是只复制其引用关系。修改时原对象不再受到任何影响。
+
+b. 方法：
+
+- 利用 JSON 对象中的 parse 和 stringify。
+
+- 利用递归来实现每一层都重新创建对象并赋值。
+
+
+[具体深拷贝和浅拷贝函数封装,请点击此处](https://blog.csdn.net/weixin_38008863/article/details/87902901)
+
 
 ### 12. require与import的区别
 
@@ -249,9 +297,14 @@ function throttle(fn, wait, immediate) {
 
 ### 15. babel编译原理
 
+babel是一个转译器，感觉相对于编译器compiler，叫转译器transpiler更准确，因为它只是把同种语言的高版本规则翻译成低版本规则，而不像编译器那样，输出的是另一种更低级的语言代码。
+但是和编译器类似，babel的转译过程也分为三个阶段：parsing、transforming、generating，以ES6代码转译为ES5代码为例，babel转译的具体过程如下：
+
 - babylon 将 ES6/ES7 代码解析成 AST
 - babel-traverse 对 AST 进行遍历转译，得到新的 AST
 - 新 AST 通过 babel-generator 转换成 ES5
+
+此外，还要注意很重要的一点就是，babel只是转译新标准引入的语法，比如ES6的箭头函数转译成ES5的函数；而新标准引入的新的原生对象，部分原生对象新增的原型方法，新增的API等（如Proxy、Set等），这些babel是不会转译的。需要用户自行引入polyfill来解决。
 
 ### 16. 函数柯里化
 
@@ -288,6 +341,10 @@ add1(20) === 21
 - Promise的使用与实现
 - generator： yield: 暂停代码 ； next(): 继续执行代码
 
+ES7新增：
+
+- 数组includes()方法，用来判断一个数组是否包含一个指定的值，根据情况，如果包含则返回true，否则返回false
+- a ** b指数运算符，它与 Math.pow(a, b)相同
 
 ### 18. Array 常见操作方法
 
@@ -443,7 +500,73 @@ Promise 的常用 API 如下：
 - Promise.race ：类方法，多个 Promise 任务同时执行，返回最先执行结束的 Promise 任务的结果，不管这个 Promise 结果是成功还是失败。
 - Promise.all : 类方法，多个 Promise 任务同时执行，如果全部成功执行，则以数组的方式返回所有 Promise 任务的执行结果。 如果有一个 Promise 任务 rejected，则只返回 rejected 任务的结果。
 
-### 9. 跨域
+```javascript
+
+//基本用法
+
+const promise = new Promise((resolve, reject) => {
+    try{
+       resolve('success1')
+    }catch(err){
+        reject('error')
+    }
+  
+})
+
+promise
+  .then((res) => {
+    console.log('then: ', res)
+  })
+  .catch((err) => {
+    console.log('catch: ', err)
+  })
+
+
+```
+
+### 9. Ajax的原理
+
+简单来说就是 通过XmlHttpRequest对象向服务器发异步请求，从服务器获得数据，然后用 javascript 来操作DOM更新页面的技术。
+
+```javascript
+
+//get请求方式
+function get(url,fn){
+        // XMLHttpRequest对象用于在后台与服务器交换数据
+        var xhr=new XMLHttpRequest();
+        xhr.open('GET',url,false);
+        xhr.onreadystatechange=function(){
+            // readyState == 4说明请求已完成
+            if(xhr.readyState==4){
+                if(xhr.status==200 || xhr.status==304){
+                    //console.log(xhr.responseText);
+                    fn.call(xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
+    }
+
+//post请求方式
+function post(url,data,fn){
+        var xhr=new XMLHttpRequest();
+        xhr.open('POST',url,false);
+        // 添加http头，发送信息至服务器时内容编码类型
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        xhr.onreadystatechange=function(){
+            if (xhr.readyState==4){
+                if (xhr.status==200 || xhr.status==304){
+                    // console.log(xhr.responseText);
+                    fn.call(xhr.responseText);
+                }
+            }
+        }
+        xhr.send(data);
+    }
+
+```
+
+### 10. 跨域
 
 >
 >概念：跨域是指浏览器不能执行其他网站的脚本。它是由浏览器的同源策略（域名、协议、端口均为相同）造成的，是浏览器对JavaScript实施的安全限制。
@@ -470,12 +593,35 @@ function jsonp(url, jsonpCallback, success) {
 
 ```
 
-### 10. 安全
+### 11. 浏览器存储Cookie、 LocalStorage 与 SessionStorage
+
+Cookie：
+
+- 一般由服务器生成，可设置失效时间。如果在浏览器端生成Cookie，默认是关闭浏览器后失效
+- 大小限制为4KB左右
+- 每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题
+- 需要程序员自己封装，源生的Cookie接口不友好
+
+LocalStorage：
+
+- 除非被清除，否则永久保存
+- 一般为5MB
+- 仅在客户端（即浏览器）中保存，不参与和服务器的通信
+- 原生接口可以接受，亦可再次封装来对Object和Array有更好的支持
+
+SessionStorage：
+
+- 仅在当前会话下有效，关闭页面或浏览器后被清除
+- 一般为5MB
+- 仅在客户端（即浏览器）中保存，不参与和服务器的通信
+- 原生接口可以接受，亦可再次封装来对Object和Array有更好的支持
+
+### 12. 安全
 
 - XSS攻击: 注入恶意代码。 （解决方法：1.cookie 设置 httpOnly; 2.转义页面上的输入内容和输出内容）
 - CSRF: 跨站请求伪造，防护。（解决办法：1.get 不修改数据；2.不被第三方网站访问到用户的 cookie； 3. 设置白名单，不被第三方网站请求；4.请求加校验）
 
-### 11. 内存泄露
+### 13. 内存泄露
 
 - 意外的全局变量: 无法被回收
 - 定时器: 未被正确关闭，导致所引用的外部变量无法被释放
@@ -1060,12 +1206,214 @@ HOC:
 - 使用函数代替class
 > 相比函数，编写一个 class可能需要掌握更多的知识，需要注意的点也越多，比如 this指向、绑定事件等等。另外，计算机理解一个 class比理解一个函数更快。Hooks让你可以在 classes之外使用更多 React的新特性。
 
+
+## 第六部分. Webpack
+
+### 1. 什么是webpack，与Grunt和Gulp有啥不同
+
+概念：
+
+- Webpack是一个模块打包工具，在webpack里面一切皆模块通过loader转换文件，通过plugin注入钩子，最后输出有多个模块组合成的文件。
+- Gulp/Grunt是一种能够优化前端的开发流程的构建工具
+
+相同点：
+
+- 三者都是前端构建工具，Grunt和Gulp在早期比较流行，现在webpack相对来说比较主流，不过一些轻量化的任务还是会用gulp来处理，比如单独打包CSS文件等。
+
+不同点：
+
+- Grunt和Gulp是基于任务和流（Task、Stream）的。类似jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据， 整条链式操作构成了一个任务，多个任务就构成了整个web的构建流程。
+- Webpack是基于入口的。Webpack会自动地递归解析入口所需要加载的所有资源文件，然后用不同的Loader来处理不同的文件，用Plugin来扩展webpack功能。　
+
+### 2. Webpack的优缺点
+
+优点：
+
+- 专注于处理模块化的项目，能做到开箱即用，一步到位
+- 可通过plugin扩展，方便、灵活　　
+- 社区庞大活跃，经常引入新特性
+- 良好的开发体验
+
+缺点：
+
+- 只能用于采用模块化开发的项目
+
+### 3. webpack构建过程　
+
+Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：
+
+- 1.初始化参数：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数
+
+- 2.开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译
+
+- 3.确定入口：根据配置中的 entry 找出所有的入口文件
+
+- 4.编译模块：从入口文件出发，调用所有配置的 Loader 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理
+
+- 5.完成模块编译：在经过第4步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系
+
+- 6.输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会
+
+- 7.输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
+
+在以上过程中，Webpack 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 Webpack 提供的 API 改变 Webpack 的运行结果。
+
+### 4. 什么是entry,output
+
+- entry入口，告诉webpack要使用哪个模块作为构建项目的起点，默认为./src/index.js
+
+- output出口，告诉webpack在哪里输出它打包好的代码以及如何命名，默认为./dist
+
+### 5. bundle、chunk、module是什么
+
+- bundle: 是由webpack打包出来的文件
+
+- chunk: 代码块，一个chunk由多个模块组合而成，用于代码的合并和分割
+
+- module: 是开发中的单个模块，一个模块对应一个文件，webpack会从配置的entry中递归开始找出所有依赖的模块
+
+### 6. 什么是loader？ 什么是plugin？两者的不同
+
+概念：
+
+- loader：模块转换器。用于把模块原内容按照需求转换成新内容。通过使用不同的Loader，Webpack可以要把不同的文件都转成JS文件,比如CSS、ES6/7、JSX等
+
+- plugin：扩展插件。在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情，一个插件是含有apply方法的一个对象，通过这个方法可以参与到整个webpack打包的各个流程
+
+不同：
+
+- loader是使wenbpack拥有加载和解析非js文件的能力
+
+- plugin 可以扩展webpack的功能，使得webpack更加灵活。可以在构建的过程中通过Webpack的api改变输出的结果
+
+> loader是用来对模块的源代码进行转换,而plugin目的在于解决 loader 无法实现的其他事，因为plugin可以在任何阶段调用,能够跨Loader进一步加工Loader的输出
+
+### 7. 常见的plugin和常见的loader有哪些，有什么作用？
+
+plugin:
+
+- html-webpack-plugin 为html文件中引入的外部资源，可以生成创建html入口文件
+- mini-css-extract-plugin 分离css文件
+- clean-webpack-plugin 删除打包文件
+- HotModuleReplacementPlugin 热更新应用
+- copy-webpack-plugin 拷贝静态文件
+- define-plugin：定义环境变量
+- commons-chunk-plugin：提取公共代码
+- terser-webpack-plugin 通过TerserPlugin压缩ES6代码
+
+loader:
+
+- file-loader：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件
+- url-loader：和 file-loader 类似，但是能在文件很小的情况下以 base64 的方式把文件内容注入到代码中去
+- source-map-loader：加载额外的 Source Map 文件，以方便断点调试
+- image-loader：加载并且压缩图片文件
+- babel-loader：把 ES6 转换成 ES5
+- css-loader：加载 CSS，支持模块化、压缩、文件导入等特性
+- style-loader：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS。
+- eslint-loader：通过 ESLint 检查 JavaScript 代码
+
+### 8. 什么是模块热更新？
+
+Webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。devServer中通过hot属性可以空时模块的热替换。
+
+```javascript
+
+//通过配置文件
+const webpack = require('webpack');
+const path = require('path');
+let env = process.env.NODE_ENV == "development" ? "development" : "production";
+const config = {
+    mode: env,
+    devServer: {
+        hot:true
+    }
+}
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(), //热加载插件
+    ],
+module.exports = config;
+
+```
+
+### 9. webpack-dev-server和http服务器如nginx有什么区别?
+
+webpack-dev-server使用内存来存储webpack开发环境下的打包文件。并且可以使用模块热更新，他比传统的http服务对开发更加简单高效。
+
+### 10. 在Webpack中如何做到长缓存优化？
+
+浏览器在用户访问页面的时候，为了加快加载速度会对用户访问的静态资源进行存储，但是每一次代码升级或更新都需要浏览器下载新的代码，最简单方便的方式就是引入新的文件名称。webpack中可以在output中指定chunkhash，并且分离经常更新的代码和框架代码。通过NameModulesPlugin或HashedModuleIdsPlugin使再次打包文件名不变。
+
+### 11. Webpack如何配置单页面和多页面的应用程序？
+
+```javascript
+
+    //单个页面
+    module.exports = {
+        entry: './path/to/my/entry/file.js'
+    }
+    //多页面应用程序
+    module.entrys = {
+        entry: {
+            pageOne: './src/pageOne/index.js',
+            pageTwo: './src/pageTwo/index.js'
+        }
+    }
+
+```
+
+### 12. 如何提高Webpack的构建速度?
+
+- 多入口情况下，使用CommonsChunkPlugin来提取公共代码
+
+- 通过externals配置来提取常用库
+
+- 利用DllPlugin和DllReferencePlugin预编译资源模块 通过DllPlugin来对那些我们引用但是绝对不会修改的npm包来进行预编译，再通过DllReferencePlugin将预编译的模块加载进来。
+
+- 使用Happypack 实现多线程加速编译
+
+- 使用webpack-uglify-parallel来提升uglifyPlugin的压缩速度。 原理上webpack-uglify-parallel采用了多核并行压缩来提升压缩速度
+
+- 使用Tree-shaking和Scope Hoisting来剔除多余代码
+
+### 13. 如何利用Webpack来优化前端性能？（提高性能和体验）
+
+- 压缩代码。删除多余的代码、注释、简化代码的写法等等方式。可以利用webpack的UglifyJsPlugin和ParallelUglifyPlugin来压缩JS文件， 利用cssnano（css-loader?minimize）来压缩css
+
+- 利用CDN加速。在构建过程中，将引用的静态资源路径修改为CDN上对应的路径。可以利用webpack对于output参数和各loader的publicPath参数来修改资源路径
+
+- 删除死代码（Tree Shaking）。将代码中永远不会走到的片段删除掉。可以通过在启动webpack时追加参数--optimize-minimize来实现
+
+- 提取公共代码
+
+### 14. Webpack3和Webpack4的区别
+
+- mode/–mode参数，新增了mode/--mode参数来表示是开发还是生产（development/production）。production 侧重于打包后的文件大小，development侧重于goujiansud
+
+- 移除loaders，必须使用rules（在3版本的时候loaders和rules 是共存的但是到4的时候只允许使用rules）
+
+- 移除了CommonsChunkPlugin (提取公共代码)，用optimization.splitChunks和optimization.runtimeChunk来代替
+
+- 支持es6的方式导入JSON文件，并且可以过滤无用的代码
+
+```javascript
+
+let jsonData = require('./data.json')
+import jsonData from './data.json'
+import { first } from './data.json' // 打包时只会把first相关的打进去
+
+```
+- 升级happypack插件（happypack可以进行多线程加速打包）
+
+- ExtractTextWebpackPlugin调整，建议选用新的CSS文件提取kiii插件mini-css-extract-plugin，production模式，增加 minimizer
+
+
 ## 参考资料
 
 - [中高级前端大厂面试秘籍，为你保驾护航金三银四，直通大厂(上) - 掘金](https://juejin.im/post/5c64d15d6fb9a049d37f9c20#heading-30)
 - [中高级前端大厂面试秘籍，寒冬中为您保驾护航，直通大厂(中) - React篇](https://juejin.im/post/5c92f499f265da612647b754#heading-4)
 - [JavaScript 面试 20 个核心考点 ](https://mp.weixin.qq.com/s?__biz=MzU3MDAyNDgwNA==&mid=2247484912&idx=1&sn=4b91963d14bfc9f5d7799525bebf423c&scene=19#wechat_redirect)
 - [React高频面试题梳理，看看面试怎么答？（上） ](https://mp.weixin.qq.com/s?__biz=MzU3MDAyNDgwNA==&mid=2247484938&idx=1&sn=5707d470d5a3c29db0f29a683ce7d02a&scene=19#wechat_redirect)
+- [前端面试题整理—Webpack+Git篇](https://www.cnblogs.com/theblogs/p/10781273.html)
 
 
 
