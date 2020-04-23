@@ -8,8 +8,9 @@
 2. **[Components](#2-Components)**
 3. **[Node](#3-Node)**
 4. **[Utils工具类函数封装](#4-Utils工具类函数封装)**
-5. **[React](#5-React)**
-6. **[前端知识汇总](#6-前端知识汇总)**
+5. **[Vue](#5-Vue)**
+6. **[React](#6-React)**
+7. **[前端知识汇总](#7-前端知识汇总)**
 
 ---
 
@@ -52,14 +53,21 @@
 
 ---
 
-## 5. React
+## 5. Vue
+
+* :book: [Vue中使用debounce防抖](https://github.com/CloudEmperor/blog/blob/master/markdown/vue/debounce.md)
+
+
+---
+
+## 6. React
 
 * :book: [create-react-app 配置antd 自定义主题](https://github.com/CloudEmperor/blog/blob/master/markdown/react/antdTheme.md)
 * :book: [React Native开发- 搭建React Native开发环境](https://github.com/CloudEmperor/blog/blob/master/markdown/react/reactNative.md)
 
 ---
 
-## 6. 前端知识汇总
+## 7. 前端知识汇总
 
 * :book: [前端知识汇总](https://github.com/CloudEmperor/blog/blob/master/markdown/interviewQuestion/interviewQuestion.md)
 

@@ -13,6 +13,9 @@
 </template>
 
 <script>
+//引入lodash提供的debounce防抖函数
+import _ from 'lodash'
+
 export default {
  name: 'DivInput',
  props:{
@@ -45,16 +48,16 @@ export default {
             }
   },
  methods:{
-    onBlur(e){
+    onBlur:_.debounce(function(e){
         this.isLock = false
         if(!e.target.innerText){
             e.target.innerText=this.innerText
             this.$emit('input',e.target.innerText)
-        }
-    },
-   changeText(e){
-       this.$emit('input',e.target.innerText);
-   }
+        }  
+   }, 500),  
+   changeText:_.debounce(function(e){
+        this.$emit('input',e.target.innerText); 
+   }, 500)
  }
 }
 </script>
