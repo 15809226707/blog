@@ -1,4 +1,4 @@
-# Vue中使用debounce防抖避坑指南
+# Vue中使用debounce防抖的正确姿势
 
 ## 1. 防抖 (debounce)
 
@@ -92,9 +92,9 @@ export default {
 
 ```
 
-这种写法，debounce第一个参数写成箭头函数就取不到this。vue原始的methods声明写法：search(){}，
+以上，debounce第一个参数写成箭头函数就取不到this。vue原始的methods声明写法：search(){}，
 
-这个写法等价于search: function(){}，你一样不能写成search: () => {}（这一点vue文档里在methods和watch上都强调过）。
+这个写法等价于search: function(){}，你一样不能写成search: () => {}（这一点vue文档里在methods和watch上都有强调）。
 
 因为箭头函数中的this指向了父级作用域的上下文。如果改成箭头函数，也就指向了当前这个vue组件声明的上下文（就是写import、export的这一层作用域）。
 
@@ -102,7 +102,7 @@ debounce的用法是传入一个函数source function，返回一个被包装好
 
 去抖效果需要通过反复调用这个被包装好的debounced函数体现。
 
-你的写法相当于每次执行search，都拿到了一个新包装的函数，每次都只调用这个新函数一次，当然没效果了。
+这个写法相当于每次执行search，都拿到了一个新包装的函数，每次都只调用这个新函数一次，当然就没效果。
 
 ### 正确用法
 
