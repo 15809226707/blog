@@ -55,7 +55,7 @@
 
 ## 5. Vue
 
-* :book: [Vue中使用debounce防抖](https://github.com/CloudEmperor/blog/blob/master/markdown/vue/debounce.md)
+* :book: [Vue中使用debounce防抖避坑指南](https://github.com/CloudEmperor/blog/blob/master/markdown/vue/debounce.md)
 
 
 ---

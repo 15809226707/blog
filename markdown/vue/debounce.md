@@ -1,4 +1,4 @@
-# Vue中使用debounce防抖
+# Vue中使用debounce防抖避坑指南
 
 ## 1. 防抖 (debounce)
 
@@ -35,7 +35,7 @@ function debounce(fn, wait, immediate) {
 此处例子是用div模拟input框写的一个组件。使用的是lodash自带的debounce函数，也可以用自己封装好的debounce函数，本质是一样的。
 
 
-- lodash官方文档
+### lodash官方文档
 
 lodash官方debounce地址：[https://www.lodashjs.com/docs/lodash.debounce](https://www.lodashjs.com/docs/lodash.debounce)
 
@@ -55,9 +55,9 @@ _.debounce(func, [wait=0], [options={}])
 ```
 
 
-- 错误用法
+### 错误用法
 
-Vue原型链上挂载lodash：
+- Vue原型链上挂载lodash：
 
 ```javascript
 
@@ -73,7 +73,7 @@ Vue原型链上挂载lodash：
 
 如果不想写import lodash，就只能在created生命周期里，为当前实例写一个新的method上去。
 
-组件内引用lodash,箭头函数写法：
+- 组件内引用lodash并采用箭头函数写法：
 
 ```javascript
 
@@ -104,7 +104,7 @@ debounce的用法是传入一个函数source function，返回一个被包装好
 
 你的写法相当于每次执行search，都拿到了一个新包装的函数，每次都只调用这个新函数一次，当然没效果了。
 
-- 正确用法
+### 正确用法
 
 ```javascript
 
