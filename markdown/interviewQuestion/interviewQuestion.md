@@ -343,8 +343,22 @@ add1(20) === 21
 
 ES7新增：
 
-- 数组includes()方法，用来判断一个数组是否包含一个指定的值，根据情况，如果包含则返回true，否则返回false
-- a ** b指数运算符，它与 Math.pow(a, b)相同
+- 、Array.prototype.includes()方法，用来判断一个数组是否包含一个指定的值，根据情况，如果包含则返回true，否则返回false
+- 求幂运算符（**），它与 Math.pow(a, b)相同
+
+```javascript
+
+//Array.prototype.includes()
+
+['a', 'b', 'c', 'd'].includes('b')     // true
+
+//求幂运算符（**）
+
+3 ** 2            // 9
+//效果同：
+Math.pow(3, 2)   // 9
+
+```
 
 ### 18. Array 常见操作方法
 
