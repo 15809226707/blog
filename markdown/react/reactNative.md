@@ -38,7 +38,7 @@ Java的运行环境，这里注意需要下载的JDK版本为1.8，只能是1.8�
 
 Python的官网下载地址为：[https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-也是直接下载2.x系列的最新版本。下载下来的一个安装文件，直接一步一步安装即可，安装好后，设置环境变量即可。
+也是直接下载2.x系列的最新版本。下载下来的一个安装文件，直接一步一步安装即可。
 
 ### 1-3. 安装 JDK
 
@@ -46,7 +46,7 @@ React Native要求JDK的版本为1.8。
 
 官网的下载地址为：[https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-选择本系统合适的版本，下载下来的一个安装文件，直接一步一步安装即可，安装好后，设置环境变量即可。
+选择本系统合适的版本，下载下来的一个安装文件，直接一步一步安装即可。
 
 ### 1-4. 安装Android环境
 
@@ -113,7 +113,45 @@ react-native init reactNativeDemo
 
 注意：在哪个目录下执行该命令，就会在该目录创建项目。
 
-创建好项目后，就会在当前目录下创建一个reactNativeDemo的目录，然后进入该目录，再执行：
+## 3.Android 设备
+
+### 3-1. 使用 Android 真机
+
+你也可以使用 Android 真机来代替模拟器进行开发，只需用 usb 数据线连接到电脑，然后遵照在设备上运行这篇文档的说明操作即可。
+
+文档地址：[https://reactnative.cn/docs/running-on-device](https://reactnative.cn/docs/running-on-device)
+
+### 3-2. 使用 Android 模拟器
+
+你可以使用 Android Studio 打开项目下的"android"目录，然后可以使用"AVD Manager"来查看可用的虚拟设备。如果你刚刚才安装 Android Studio，那么可能需要先创建一个虚拟设备。点击"Create Virtual Device..."，然后选择所需的设备类型并点击"Next"，然后选择Pie API Level 28 image。
+> 译注：请不要轻易点击 Android Studio 中可能弹出的建议更新项目中某依赖项的建议，否则可能导致无法运行。
+> 如果你还没有安装 HAXM（Intel 虚拟硬件加速驱动），则先点击"Install HAXM"来进行安装。
+然后点击"Next"和"Finish"来完成虚拟设备的创建。现在你应该可以点击虚拟设备旁的绿色三角按钮来启动它了，启动完后我们可以尝试运行应用。
+
+特别注意的坑：
+
+如果你的电脑是AMD处理器，HAXM是无法安装的。
+
+解决办法请参考《解决AMD CPU 启动Android模拟器时无法安装Intel HAXM 的问题》博客：
+
+[https://blog.csdn.net/a497785609/article/details/103832368](https://blog.csdn.net/a497785609/article/details/103832368)
+
+按照此博客操作，最后一步命令行进入的路径：
+
+```
+//打开命令行进入以下路径（$ANDROID_SDK_ROOT是Android SDK的安装路径）
+
+$ANDROID_SDK_ROOT\extras\google\Android_Emulator_Hypervisor_Driver
+
+//我电脑实际路径如下
+
+C:\Users\WIN10\AppData\Local\Android\Sdk\extras\google\Android_Emulator_Hypervisor_Driver
+
+```
+
+## 4. 编译并运行 React Native 应用
+
+确保你先运行了模拟器或者连接了真机，然后在你的项目目录中运行android或者react-native run-android：
 
 ```
 
@@ -122,3 +160,5 @@ cd reactNativeDemo
 react-native run-android
 
 ```
+
+
