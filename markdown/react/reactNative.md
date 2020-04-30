@@ -162,3 +162,36 @@ react-native run-android
 ```
 
 
+## 5. 项目添加相关依赖包
+
+### 5-1. 路由配置
+
+```
+npm install react-navigation --save
+npm install react-native-gesture-handler --save
+npm install react-native-vector-icons --save //（日后配置底部导航会用到）
+
+```
+
+具体参考博文:
+- react-native项目的新建以及路由配置：[https://www.jianshu.com/p/26bae1ca0c2c](https://www.jianshu.com/p/26bae1ca0c2c)
+- react-navigation导航组件使用详解:[https://blog.csdn.net/kisty_yao/article/details/105363598](https://blog.csdn.net/kisty_yao/article/details/105363598)
+
+### 5-2. Axios
+
+```
+npm install  --save axios
+
+```
+
+### 5-3. Redux
+
+```
+npm install --save redux
+npm install --save react-redux
+npm install --save redux-thunk
+
+```
+
+
+
