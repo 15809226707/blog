@@ -1075,7 +1075,7 @@ function withTiming(Comp) {
 
 ### 6. Redux
 
->概念： Redux 是一个 数据管理中心，可以把它理解为一个全局的 data store 实例。它通过一定的使用规则和限制，保证着数据的健壮性、可追溯和可预测性。它与 React 无关，可以独立运行于任何 JavaScript 环境中，从而也为同构应用提供了更好的数据同 > 步通道。
+>概念： Redux 是一个 数据管理中心，可以把它理解为一个全局的 data store 实例。它通过一定的使用规则和限制，保证着数据的健壮性、可追溯和可预测性。它与 React 无关，可以独立运行于任何 JavaScript 环境中，从而也为同构应用提供了更好的数据同步通道。
 
 核心理念：
 
@@ -1297,7 +1297,7 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 
 不同：
 
-- loader是使wenbpack拥有加载和解析非js文件的能力
+- loader是使webpack拥有加载和解析非js文件的能力
 
 - plugin 可以扩展webpack的功能，使得webpack更加灵活。可以在构建的过程中通过Webpack的api改变输出的结果
 
