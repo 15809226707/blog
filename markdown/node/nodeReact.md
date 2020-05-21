@@ -85,12 +85,8 @@ node bin/www
 npm i supervisor -g
 
 ```
-$\color{red}{supervisor 启动项目命令：}$
 
-```diff 
-- supervisor 启动项目命令：
-
-``` 
+supervisor 启动项目命令：
 
 
 ```
