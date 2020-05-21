@@ -360,23 +360,20 @@ server.listen(port, '192.168.1.117');
 
 ## 五.MySQL数据库
 
-1. 下载并安装MySQL
+1. 下载并安装MySQL（此处推荐 Navicat for MySQL 中文版安装）
 
-两种安装方式：
+安装方式：
 
-  - 正常安装，参考 [ Windows10 MYSQL Installer 安装](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)
-  - 免安装操作，参考 [Windows 上安装 MySQL ](https://www.runoob.com/mysql/mysql-install.html)
+  - Navicat for MySQL 中文版, 参考 [Navicat for MySQL 中文版安装 ](https://www.formysql.com/xiazai_mysql.html)
 
-2. MySQL_Workbench 创建数据库和表,具体操作参考[初学者使用MySQL_Workbench 6.0CE创建数据库和表，以及在表中插入数据](https://blog.csdn.net/u011719449/article/details/12521437?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
-
-此处创建数据库名字为 cloudemperor
+此处创建数据库名字为 ce-dev
 
 ```
 npm install --save mysql
 
 ```
 
-3. 连接数据库,在项目根目录下建 config -> db.js,配置数据库信息
+2. 连接数据库,在项目根目录下建 config -> db.js,配置数据库信息
 
 ```javascript
 
@@ -387,8 +384,8 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "zhy554971375@",
-  database: "cloudemperor" //数据库名
+  password: "", //密码
+  database: "ce-dev" //数据库名
 });
 
 db.connect();
@@ -396,6 +393,7 @@ db.connect();
 module.exports=db
 
 ```
+
 
 数据库连接参数说明：
 
@@ -421,6 +419,58 @@ debug              | 开启调试（默认：false）
 multipleStatements | 是否许一个query中有多个MySQL语句 （默认：false）
 flags              | 用于修改连接标志
 ssl                | 使用ssl参数（与crypto.createCredenitals参数格式一至）或一个包含ssl配置文件名称的字符串，目前只捆绑Amazon RDS的配置文件
+
+
+
+3. MySQL数据库建表及逻辑处理
+
+- Navicat for MySQL上建表ce-dev -> admin_login 
+
+userName|passWord|userId|token|avatar|id|modifyDate|createDate
+--|--|--|--|--
+admin|123456|1|Null|Null|Null|Null|Null|Null      
+
+
+- controllers -> admin -> index.js ->Admin.adminLogin逻辑调整
+
+```javascript
+
+ adminLogin(req, res, next){
+        const { userName, passWord } = req.body;
+        const sql = 'SELECT * FROM admin_login';
+        let off=false;
+        let sendData={};
+        db.query(sql, function( error, result, fields) {
+          if (error) throw error;
+          console.log("The result is: ", result);
+            result.forEach(item=>{
+                if (item.userName === userName && item.passWord === passWord){
+                    off=true;
+                    sendData = item;
+                } else{
+                    off=false;
+                } 
+                
+            })
+            if (off){
+                res.send({
+                    status: 200,
+                    message: '登录成功',
+                    data: sendData
+                })
+            }else{
+                res.send({
+                    status: 2,
+                    message: '账号或者密码错误',
+                    data: {}
+                })
+            }
+        });
+        
+   }
+
+```
+
 
 
 
