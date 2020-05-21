@@ -87,6 +87,8 @@ npm i supervisor -g
 ```
 $\color{red}{supervisor 启动项目命令：}$
 
+<font color="red">supervisor 启动项目命令：</font>
+
 ```
 supervisor bin/www 
 
