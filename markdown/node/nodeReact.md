@@ -366,7 +366,7 @@ server.listen(port, '192.168.1.117');
 
   - Navicat for MySQL 中文版, 参考 [Navicat for MySQL 中文版安装 ](https://www.formysql.com/xiazai_mysql.html)
 
-此处创建数据库名字为 ce-dev
+此处创建数据库名字为 ce-dev, 项目中安装MySQL依赖包：
 
 ```
 npm install --save mysql
@@ -427,8 +427,8 @@ ssl                | 使用ssl参数（与crypto.createCredenitals参数格式�
 - Navicat for MySQL上建表ce-dev -> admin_login 
 
 userName|passWord|userId|token|avatar|id|modifyDate|createDate
---|--|--|--|--
-admin|123456|1|Null|Null|Null|Null|Null|Null      
+--|--|--|--|--|--|--|--
+admin|123456|1|Null|Null|Null|Null|Null      
 
 
 - controllers -> admin -> index.js ->Admin.adminLogin逻辑调整
