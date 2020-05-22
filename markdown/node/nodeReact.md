@@ -362,7 +362,7 @@ server.listen(port, '192.168.1.117');
 
 ## 五.MySQL数据库
 
-1. 下载并安装MySQL（此处推荐 Navicat for MySQL 中文版安装）
+1. 下载并安装MySQL服务
 
 两种安装方式：
 
