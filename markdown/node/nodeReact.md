@@ -366,14 +366,14 @@ server.listen(port, '192.168.1.117');
 
 两种安装方式：
 
-  - 正常安装，参考 [ Windows10 MYSQL Installer 安装](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)
+  - 正常安装(推荐)，参考 [ Windows10 MYSQL Installer 安装](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)
 
   - 免安装操作，参考 [Windows 上安装 MySQL ](https://www.runoob.com/mysql/mysql-install.html)
 
 
 2. MySQL_Workbench 创建数据库和表,具体操作参考[初学者使用MySQL_Workbench 6.0CE创建数据库和表，以及在表中插入数据](https://blog.csdn.net/u011719449/article/details/12521437?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)（此处推荐 Navicat for MySQL 中文版安装来操作数据库）
 
-3. Navicat for MySQL 中文版安装操作数据库
+3. Navicat for MySQL 中文版安装操作数据库(推荐)
 
 安装方式：
 
