@@ -364,18 +364,29 @@ server.listen(port, '192.168.1.117');
 
 1. 下载并安装MySQL（此处推荐 Navicat for MySQL 中文版安装）
 
+两种安装方式：
+
+  - 正常安装，参考 [ Windows10 MYSQL Installer 安装](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)
+
+  - 免安装操作，参考 [Windows 上安装 MySQL ](https://www.runoob.com/mysql/mysql-install.html)
+
+
+2. MySQL_Workbench 创建数据库和表,具体操作参考[初学者使用MySQL_Workbench 6.0CE创建数据库和表，以及在表中插入数据](https://blog.csdn.net/u011719449/article/details/12521437?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)（此处推荐 Navicat for MySQL 中文版安装来操作数据库）
+
+3. Navicat for MySQL 中文版安装操作数据库
+
 安装方式：
 
   - Navicat for MySQL 中文版, 参考 [Navicat for MySQL 中文版安装 ](https://www.formysql.com/xiazai_mysql.html)
 
-此处创建数据库名字为 ce-dev, 项目中安装MySQL依赖包：
+通过Navicat for MySQL创建数据库名字为 ce-dev, 项目中安装MySQL依赖包：
 
 ```
 npm install --save mysql
 
 ```
 
-2. 连接数据库,在项目根目录下建 config -> db.js,配置数据库信息
+4. 连接数据库,在项目根目录下建 config -> db.js,配置数据库信息
 
 ```javascript
 
@@ -424,7 +435,7 @@ ssl                | 使用ssl参数（与crypto.createCredenitals参数格式�
 
 
 
-3. MySQL数据库建表及逻辑处理
+5. MySQL数据库建表及逻辑处理
 
 - Navicat for MySQL上建表ce-dev -> admin_login 
 
