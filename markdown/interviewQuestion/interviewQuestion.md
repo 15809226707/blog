@@ -237,7 +237,7 @@ JSON.parse(JSON.stringify(obj))深拷贝弊端：
 - 利用递归来实现每一层都重新创建对象并赋值。
 
 
-[具体深拷贝和浅拷贝函数封装,请点击此处](https://blog.csdn.net/weixin_38008863/article/details/87902901)
+[----------具体深拷贝和浅拷贝函数封装,请点击此处](https://blog.csdn.net/weixin_38008863/article/details/87902901)
 
 
 ### 12. require与import的区别
