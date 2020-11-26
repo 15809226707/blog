@@ -2,35 +2,44 @@
 
 ```javascript
 
-var floatObj = function() {
-    function isInteger(obj) {
+/**
+ * js浮点数计算加减乘除精度损失解决方法
+ * 
+ * @param {Number} a 数值a
+ * @param {Number} b 数值b
+ * @param {String} computeType 加减乘除类型 add加  subtract减  multiply乘  divide除
+ * @return {Number} 返回计算结果，floatNumber(0.11, 0.03, 'add')
+ * 
+ */
+ const floatNumber = (a, b, computeType) =>{
+    const isInteger= obj =>{
         return Math.floor(obj) === obj
     }
-    function toInteger(floatNum) {
-        var ret = {times: 1, num: 0}
+    const toInteger= floatNum =>{
+        const ret = {times: 1, num: 0}
         if (isInteger(floatNum)) {
             ret.num = floatNum
             return ret
         }
-        var strfi  = floatNum + ''
-        var dotPos = strfi.indexOf('.')
-        var len    = strfi.substr(dotPos+1).length
-        var times  = Math.pow(10, len)
-        var intNum = parseInt(floatNum * times + 0.5, 10)
+        const strfi  = floatNum + ''
+        const dotPos = strfi.indexOf('.')
+        const len    = strfi.substr(dotPos+1).length
+        const times  = Math.pow(10, len)
+        const intNum = parseInt(floatNum * times + 0.5, 10)
         ret.times  = times
         ret.num    = intNum
         return ret
     }
-    function operation(a, b, op) {
-        var o1 = toInteger(a)
-        var o2 = toInteger(b)
-        var n1 = o1.num
-        var n2 = o2.num
-        var t1 = o1.times
-        var t2 = o2.times
-        var max = t1 > t2 ? t1 : t2
-        var result = null
-        switch (op) {
+    const operation=(a, b, computeType) =>{
+        const o1 = toInteger(a)
+        const o2 = toInteger(b)
+        const n1 = o1.num
+        const n2 = o2.num
+        const t1 = o1.times
+        const t2 = o2.times
+        const max = t1 > t2 ? t1 : t2
+        let result = null
+        switch (computeType) {
             case 'add':
                 if (t1 === t2) { // 两个小数位数相同
                     result = n1 + n2
@@ -58,34 +67,11 @@ var floatObj = function() {
         }
 
     }
-    // 加减乘除的四个方法
-    function add(a, b) {
-        return operation(a, b, 'add')
-    }
-    function subtract(a, b) {
-        return operation(a, b, 'subtract')
-    }
-    function multiply(a, b) {
-        return operation(a, b, 'multiply')
-    }
-    function divide(a, b) {
-        return operation(a, b, 'divide')
-    }
-    return {
-        add: add,
-        subtract: subtract,
-        multiply: multiply,
-        divide: divide
-    }
-}();
+
+    return operation(a, b, computeType)
+}
 
 
 
-```
-```javascript
-
-/*调用方式*/
-
- floatObj.add(0.11, 0.03)
 
 ```

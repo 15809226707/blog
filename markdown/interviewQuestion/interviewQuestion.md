@@ -273,7 +273,16 @@ JSON.parse(JSON.stringify(obj))深拷贝弊端：
 
 ```javascript
 
-function debounce(fn, wait, immediate) {
+/**
+ * 防抖 (debounce)将多次高频操作优化为只在最后一次执行
+ * 
+ * @param {Function} fn 需要防抖函数
+ * @param {Number} wait  需要延迟的毫秒数
+ * @param {Boolean} immediate 可选参，设为true，debounce会在wait时间间隔的开始时立即调用这个函数
+ * @return {Function}
+ * 
+ */
+ const debounce= (fn, wait, immediate) =>{
     let timer = null
 
     return function() {
@@ -297,7 +306,16 @@ function debounce(fn, wait, immediate) {
 
 ```javascript
 
-function throttle(fn, wait, immediate) {
+/**
+ * 节流(throttle)将高频操作优化成低频操作，每隔 100~500 ms执行一次即可
+ * 
+ * @param {Function} fn 需要防抖函数
+ * @param {Number} wait  需要延迟的毫秒数
+ * @param {Boolean} immediate 可选参立即执行，设为true，debounce会在wait时间间隔的开始时立即调用这个函数
+ * @return {Function}
+ * 
+ */
+ const throttle =(fn, wait, immediate) =>{
     let timer = null
     let callNow = immediate
     

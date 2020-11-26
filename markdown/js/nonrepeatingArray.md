@@ -1,8 +1,15 @@
 # js数组去重(复杂数据有ID的情况下)
 
 ```javascript
- // 方式一(hash)
- function nonrepeatingArray(repeatArray){
+ /**
+  * js数组去重(复杂数据有ID的情况下)
+  * 方式一(hash)
+  * 
+  * @param {Array} repeatArray 含重复数据的数组
+  * @return {Array} 返回去重后的数据
+  * 
+  */
+const noRepeatArrayHash= repeatArray =>{
       const hash = {};
       const temp = [];
       for (let i = 0; i < repeatArray.length; i++) {
@@ -13,11 +20,18 @@
       }
   
       return temp;
-    }
+}
 
 
- // 方式二(hash + reduce)
-function nonrepeatingArray(repeatArray){
+ /**
+  * js数组去重(复杂数据有ID的情况下)
+  * 方式二(hash + reduce)
+  * 
+  * @param {Array} repeatArray 含重复数据的数组
+  * @return {Array} 返回去重后的数据
+  * 
+  */
+const noRepeatArrayReduce= repeatArray =>{
     const hash = {};
 	return repeatArray.reduce(function(accumulator, currentValue){
 	       if(!hash[currentValue.id]){
@@ -28,7 +42,8 @@ function nonrepeatingArray(repeatArray){
         return accumulator		   
 	
 	}, []);
-    }
+}
+
 
 ```
 ```javascript
@@ -44,6 +59,6 @@ const list=[
     {name:'张三', id:'123456789'},
     {name:'张三', id:'123456789'}];
 
-    console.log(nonrepeatingArray(list))
+    console.log(noRepeatArrayHash(list))
 
 ```
