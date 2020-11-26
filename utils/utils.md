@@ -1,9 +1,8 @@
----
-# 主题列表：juejin, github, smartblue, cyanosis, channing-cyan, fancy, hydrogen, condensed-night-purple, greenwillow, v-green
-# 贡献主题：https://github.com/xitu/juejin-markdown-themes
-theme: juejin
-highlight:
----
+# 值得收藏的前端开发必备工具类函数
+    
+      
+
+
 ## 前言
 乘着空闲，整理一些平常项目开发中经常用到的工具类函数。每个都是亲测有效的，开箱即用。  
   
@@ -565,4 +564,9 @@ export const scrollToTop = () => {
 }
 
 ```
+
+### 感谢阅读，更多内容请关注：
+- Github： [Github Technology blog](https://github.com/CloudEmperor/blog) 
+- juejin：[juejin Technology blog](https://juejin.im/user/5b7c1540f265da4355387634) 
+- CSDN：[CSDN   Technology blog](https://me.csdn.net/weixin_38008863) 
 
