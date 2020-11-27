@@ -309,11 +309,24 @@
           * **/
            function imageDwonLoad (){
                if(initObj.imgDownLoadSrc){
-                     var a = document.createElement("a");
-                     var timestamp = (new Date()).getTime();
-                     a.href = initObj.imgDownLoadSrc;
-                     a.download = timestamp;
-                     a.click();
+                    var timestamp = (new Date()).getTime();
+                     //兼容IE
+                     if (window.navigator.msSaveOrOpenBlob) {
+                       var bstr = atob(initObj.imgDownLoadSrc.split(',')[1]);
+                       var n = bstr.length;
+                       var u8arr = new Uint8Array(n);
+                       while (n--) {
+                           u8arr[n] = bstr.charCodeAt(n);
+                       }
+                       var blob = new Blob([u8arr]);
+                       window.navigator.msSaveOrOpenBlob(blob, timestamp + '.' + 'png');
+                   }else{
+                       //非IE
+                        var a = document.createElement("a");
+                         a.href = initObj.imgDownLoadSrc;
+                         a.download = timestamp;
+                         a.click();
+                   }
                }
               
            }
