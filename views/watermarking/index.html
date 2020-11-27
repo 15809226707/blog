@@ -254,9 +254,7 @@
           *
           * **/
         function inputChange(e, type){
-            console.log(e, type)
             initObj[type]= e.value
-            console.log(initObj)
             if (initObj.imgUrl) {
                 createWaterMark('myCanvas')
             }
