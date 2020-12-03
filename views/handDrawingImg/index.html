@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>手绘图</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Microsoft soft";
+        }
+        html,
+        body {
+            height: 100%;
+        }
+        #app {
+            height: 100%;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        #myCanvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 5;
+        }
+        .box {
+            position: fixed;
+            z-index: 50;
+        }
+        .box ul li {
+            background: -webkit-linear-gradient(90deg, #A020F0 15%, #2ED 100%);
+            background: -moz-linear-gradient(90deg, #A020F0 15%, #2ED 100%);
+            background: -o-linear-gradient(90deg, #A020F0 15%, #2ED 100%);
+            background: linear-gradient(90deg, #A020F0 15%, #2ED 100%);
+            cursor: pointer;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            list-style: none;
+        }
+        .box ul li:hover {
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+        }
+        input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 100px;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+        /*PC端*/
+        @media (min-width: 768px) {
+            .box {
+                width: 60px;
+                height: 280px;
+                left: 0;
+                top: 15%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .masterkey {
+                width: 55px;
+                height: 55px;
+                text-align: center;
+                line-height: 55px;
+                font-size: 30px;
+                color: #fff;
+                border-radius: 100%;
+                background: -webkit-linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+                background: -moz-linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+                background: -o-linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+                background: linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+            }
+            .masterkey:hover {
+                opacity: 0.8;
+                filter: alpha(opacity=80);
+            }
+            .pc-button {
+                width: 50px;
+                height: 210px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .pc-button li {
+                width: 100%;
+                height: 50px;
+                border-radius: 5px;
+                line-height: 50px;
+                font-size: 14px;
+            }
+        }
+        /*移动端*/
+        @media (max-width: 768px) {
+            .box {
+                width: 12.5rem;
+                height: 6.5rem;
+                left: 50%;
+                transform: translateX(-6.25rem);
+                bottom: 5%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .masterkey {
+                width: 3.5rem;
+                height: 3.5rem;
+                text-align: center;
+                line-height: 3.5rem;
+                font-size: 1.5rem;
+                color: #fff;
+                border-radius: 100%;
+                background: -webkit-linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+                background: -moz-linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+                background: -o-linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+                background: linear-gradient(125deg, #00EAFF, #F067B4, #633bd3);
+            }
+            .masterkey:hover {
+                opacity: 0.8;
+                filter: alpha(opacity=80);
+            }
+            .mobile-button {
+                width: 12.5rem;
+                height: 2rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .mobile-button li {
+                width: 3rem;
+                height: 100%;
+                border-radius: 0.3rem;
+                line-height: 2rem;
+                font-size: 0.14rem;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box">
+            <div class="masterkey">+<input type="file" id="file" multiple="multiple" accept="image/*" /></div>
+            <ul class="pc-button mobile-button">
+                <li>颜色<input type="color" id="color" /></li>
+                <li onClick="lineChange()">线宽 <span class="line">3</span></li>
+                <li onClick="javascript:location.reload();">重置</li>
+                <li onclick="imageDwonLoad()">下载</li>
+            </ul>
+        </div>
+        <canvas id="myCanvas">您的浏览器不支持Canvas</canvas>
+    </div>
+</body>
+<script>
+    //初始化数据
+    var initData = {
+        imgPath: '',//本地图片路径地址
+        imgDownLoadSrc: '',//最终完成操作下载地址
+        color: 'red', //默认手签笔颜色
+        line: 3, //默认手签线宽度
+        beginX: null,
+        beginY: null,
+        clientWidth: document.documentElement.clientWidth || document.body.clientWidth,
+        clientHeight: document.documentElement.clientHeight || document.body.clientHeight
+
+    }
+    var canvas = document.getElementById('myCanvas')
+    canvas.setAttribute('width', initData.clientWidth + 'px')
+    canvas.setAttribute('height', initData.clientHeight + 'px')
+    /**
+     * 背景图片上传
+     */
+    document.getElementById('file').addEventListener('change', function () {
+        var reader = new FileReader()
+        reader.readAsDataURL(this.files[0])
+        reader.onload = function (e) {
+            // 转换后的base64就在e.target.result里面
+            initData.imgPath = e.target.result
+            createWaterMark()
+        }
+
+    }, false)
+    /**
+     * canvas画背景图
+     */
+    function createWaterMark() {
+        var img = new Image;
+        img.setAttribute("crossOrigin", 'Anonymous');
+        var ctxd = canvas.getContext("2d");
+        img.onload = function () {
+            canvas.style.letterSpacing = '10px';
+            var params = autoResizeImage(initData.clientWidth, initData.clientHeight, initData.imgPath)
+            canvas.setAttribute('width', params.width);
+            canvas.setAttribute('height', params.height);
+            canvas.style.top = params.y + 'px'
+            canvas.style.left = params.x + 'px'
+            //绘制背景
+            ctxd.drawImage(img, 0, 0, params.width, params.height);
+            // ctxd.drawImage(img, 0, 0);
+            initData.imgDownLoadSrc = canvas.toDataURL("image/png", 1.0);
+
+        }
+        img.src = initData.imgPath;
+
+    }
+    /**
+     * 按比例压缩图片显示
+     * @param {Number} maxWidth 最大宽度
+     * @param {Number} maxHeight 最大高度
+     * @param {String} imgSrc 图片地址
+     * @return {Object}  width等比例宽度 height等比例高度 x相对于最大宽度的x轴居中位置 Y相对于最大宽度的Y轴居中位置
+     */
+    function autoResizeImage(maxWidth, maxHeight, imgSrc) {
+        var eleImg = new Image();
+        eleImg.src = imgSrc;
+        var hRatio;
+        var wRatio;
+        var Ratio = 1;
+        var w = eleImg.naturalWidth;
+        var h = eleImg.naturalHeight;
+        wRatio = maxWidth / w;
+        hRatio = maxHeight / h;
+        if (maxWidth == 0 && maxHeight == 0) {
+            Ratio = 1;
+        } else if (maxWidth == 0) {
+            if (hRatio < 1) Ratio = hRatio;
+        } else if (maxHeight == 0) {
+            if (wRatio < 1) Ratio = wRatio;
+        } else if (wRatio < 1 || hRatio < 1) {
+            Ratio = (wRatio <= hRatio ? wRatio : hRatio);
+        }
+        if (Ratio < 1) {
+            w = w * Ratio;
+            h = h * Ratio;
+        }
+
+        var axleX = (maxWidth - w) / 2
+        var axleY = (maxHeight - h) / 2
+
+        return {
+            width: w,
+            height: h,
+            x: axleX,
+            y: axleY
+        }
+    }
+    /**
+     * 获取颜色
+     */
+    var eleColor = document.getElementById('color')
+    eleColor.addEventListener('input', function () {
+        eleColor.parentNode.style.background = this.value
+        initData.color = this.value
+
+    }, false)
+    /**
+     * 线宽
+     */
+    function lineChange() {
+        if (initData.line >= 1 && initData.line < 20) {
+            initData.line++
+        } else {
+            initData.line = 1
+        }
+        document.querySelector('.line').innerHTML = initData.line
+    }
+    /**
+     * 手写
+     * @param {Number} beginX x轴绘制开始值
+     * @param {Number} beginY Y轴绘制开始值
+     * @param {Number} stopX x轴绘制结束值
+     * @param {Number} stopY y轴绘制结束值
+     * @param {String} ctx 元素
+     */
+    function writing(beginX, beginY, stopX, stopY, ctx) {
+        ctx.beginPath();  // 开启一条新路径
+        ctx.globalAlpha = 1;  // 设置图片的透明度
+        ctx.lineWidth = initData.line;  // 设置线宽
+        ctx.strokeStyle = initData.color;  // 设置路径颜色
+        ctx.moveTo(beginX, beginY);  // 从(beginX, beginY)这个坐标点开始画图
+        ctx.lineTo(stopX, stopY);  // 定义从(beginX, beginY)到(stopX, stopY)的线条（该方法不会创建线条）
+        ctx.closePath();  // 创建该条路径
+        ctx.stroke();  // 实际地绘制出通过 moveTo() 和 lineTo () 方法定义的路径。默认颜色是黑色。
+        initData.imgDownLoadSrc = canvas.toDataURL("image/png", 1.0);
+    };
+
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //移动端注册监听事件
+    canvas.addEventListener('touchstart', function (event) {
+        event.preventDefault(); // 阻止在canvas画布上签名的时候页面跟着滚动
+        initData.beginX = event.touches[0].clientX - this.offsetLeft;
+        initData.beginY = event.touches[0].pageY - this.offsetTop;
+    });
+    canvas.addEventListener('touchmove', function (event) {
+        event.preventDefault(); // 阻止在canvas画布上签名的时候页面跟着滚动
+        event = event.touches[0];
+        var stopX = event.clientX - canvas.offsetLeft;
+        var stopY = event.pageY - canvas.offsetTop;
+        writing(initData.beginX, initData.beginY, stopX, stopY, ctx);
+        initData.beginX = stopX; // 这一步很关键，需要不断更新起点，否则画出来的是射线簇
+        initData.beginY = stopY;
+    });
+    //PC端注册监听事件
+    canvas.onmousedown = function (e) {
+        var e = e || window.event;
+        initData.beginX = e.clientX - this.offsetLeft;
+        initData.beginY = e.pageY - this.offsetTop;
+        document.onmousemove = function (e) {
+            var e = e || window.event;
+            var stopX = e.clientX - canvas.offsetLeft;
+            var stopY = e.pageY - canvas.offsetTop;
+            writing(initData.beginX, initData.beginY, stopX, stopY, ctx);
+            initData.beginX = stopX; // 这一步很关键，需要不断更新起点，否则画出来的是射线簇
+            initData.beginY = stopY;
+
+        };
+        document.onmouseup = function (e) {
+            this.onmousemove = null;
+            this.onmouseup = null;
+        };
+    };
+    /**
+     * 下载
+     */
+    function imageDwonLoad() {
+        if (initData.imgDownLoadSrc) {
+            var timestamp = (new Date()).getTime();
+            //兼容IE
+            if (window.navigator.msSaveOrOpenBlob) {
+                var bstr = atob(initData.imgDownLoadSrc.split(',')[1]);
+                var n = bstr.length;
+                var u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                var blob = new Blob([u8arr]);
+                window.navigator.msSaveOrOpenBlob(blob, timestamp + '.' + 'png');
+            } else {
+                //非IE
+                var a = document.createElement("a");
+                a.href = initData.imgDownLoadSrc;
+                a.download = timestamp;
+                a.click();
+            }
+        }
+
+    }
+
+
+</script>
+
+</html>

@@ -10,12 +10,16 @@ function login(){
             sessionStorage.setItem("CLOUDEMPEROR_TOKEN", "Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ==");
             window.location.href = 'https://cloudemperor.github.io/blog/views/curriculumVitae/index.html'
             break;
-        //Image Watermarking page
+        //Image1 Watermarking page
         case 'Q2xvdWRFbXBlcm9yPWltZw==':
             window.location.href = 'https://cloudemperor.github.io/blog/views/watermarking/index.html'
             break;
+        //Image2 Watermarking page
+        case 'Q2xvdWRFbXBlcm9yPWltZzI=':
+            window.location.href = 'https://cloudemperor.github.io/blog/views/handDrawingImg/index.html'
+            break;
         // Github Technology blog
-        case 'Q2xvdWRFbXBlcm9yPWdpdGh1Yg==' :
+        case 'Q2xvdWRFbXBlcm9yPWdpdGh1Yg==':
             window.location.href = 'https://github.com/CloudEmperor/blog'
             break;
         // juejin Technology blog
@@ -27,7 +31,7 @@ function login(){
             window.location.href = 'https://me.csdn.net/weixin_38008863'
             break;
         default :
-            alert('口令或者密码输入有误')
+            alert('口令或者密码错误！！！')
     }
     
 }
