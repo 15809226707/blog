@@ -319,12 +319,12 @@
                            u8arr[n] = bstr.charCodeAt(n);
                        }
                        var blob = new Blob([u8arr]);
-                       window.navigator.msSaveOrOpenBlob(blob, timestamp + '.' + 'png');
+                       window.navigator.msSaveOrOpenBlob(blob, timestamp + '.png');
                    }else{
                        //非IE
                         var a = document.createElement("a");
                          a.href = initObj.imgDownLoadSrc;
-                         a.download = timestamp;
+                         a.download = timestamp + '.png';
                          a.click();
                    }
                }
