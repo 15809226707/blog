@@ -248,47 +248,50 @@
         img.src = initData.imgPath;
 
     }
-    /**
-     * 按比例压缩图片显示参数
-     * @param {Number} maxWidth 最大宽度
-     * @param {Number} maxHeight 最大高度
-     * @param {String} imgSrc 图片地址
-     * @return {Function} cb 回调函数返回相应Object width等比例宽度 height等比例高度 x相对于最大宽度的x轴居中位置 Y相对于最大宽度的Y轴居中位置
-     */
-    function autoResizeImage(maxWidth, maxHeight, imgSrc, cb) {
+     /**
+      * 按比例压缩图片显示参数
+      * @param {Number} maxWidth 最大宽度
+      * @param {Number} maxHeight 最大高度
+      * @param {String} imgSrc 图片地址
+      * @return {Object} resolve 包含width等比例宽度 height等比例高度 x相对于最大宽度的x轴居中位置 Y相对于最大宽度的Y轴居中位置
+      */
+    function autoResizeImage(maxWidth, maxHeight, imgSrc) {
         var eleImg = new Image();
         eleImg.src = imgSrc;
         var hRatio;
         var wRatio;
         var Ratio = 1;
-        eleImg.onload = function () {
-            var w = eleImg.naturalWidth;
-            var h = eleImg.naturalHeight;
-            wRatio = maxWidth / w;
-            hRatio = maxHeight / h;
-            if (maxWidth == 0 && maxHeight == 0) {
-                Ratio = 1;
-            } else if (maxWidth == 0) {
-                if (hRatio < 1) Ratio = hRatio;
-            } else if (maxHeight == 0) {
-                if (wRatio < 1) Ratio = wRatio;
-            } else if (wRatio < 1 || hRatio < 1) {
-                Ratio = (wRatio <= hRatio ? wRatio : hRatio);
-            }
-            if (Ratio < 1) {
-                w = w * Ratio;
-                h = h * Ratio;
-            }
+        return new Promise(function (resolve, reject) {
+            eleImg.onload = function () {
+                var w = eleImg.naturalWidth;
+                var h = eleImg.naturalHeight;
+                wRatio = maxWidth / w;
+                hRatio = maxHeight / h;
+                if (maxWidth == 0 && maxHeight == 0) {
+                    Ratio = 1;
+                } else if (maxWidth == 0) {
+                    if (hRatio < 1) Ratio = hRatio;
+                } else if (maxHeight == 0) {
+                    if (wRatio < 1) Ratio = wRatio;
+                } else if (wRatio < 1 || hRatio < 1) {
+                    Ratio = (wRatio <= hRatio ? wRatio : hRatio);
+                }
+                if (Ratio < 1) {
+                    w = w * Ratio;
+                    h = h * Ratio;
+                }
 
-            var axleX = (maxWidth - w) / 2
-            var axleY = (maxHeight - h) / 2
-            cb({
-                width: w,
-                height: h,
-                x: axleX,
-                y: axleY
-            })
-        }
+                var axleX = (maxWidth - w) / 2
+                var axleY = (maxHeight - h) / 2
+
+                resolve({
+                    width: w,
+                    height: h,
+                    x: axleX,
+                    y: axleY
+                })
+            }
+        })
 
     }
     /**
