@@ -177,9 +177,14 @@
         clientHeight: document.documentElement.clientHeight || document.body.clientHeight
 
     }
+    //初始化canvas基础设置
     var canvas = document.getElementById('myCanvas')
     canvas.setAttribute('width', initData.clientWidth + 'px')
     canvas.setAttribute('height', initData.clientHeight + 'px')
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
     /**
      * 背景图片上传
      */
@@ -199,7 +204,6 @@
     function createWaterMark() {
         var img = new Image;
         img.setAttribute("crossOrigin", 'Anonymous');
-        var ctxd = canvas.getContext("2d");
         img.onload = function () {
             canvas.style.letterSpacing = '10px';
             //按比例压缩图片显示
@@ -241,7 +245,7 @@
             canvas.style.top = params.y + 'px'
             canvas.style.left = params.x + 'px'
             //绘制背景
-            ctxd.drawImage(img, 0, 0, params.width, params.height);
+            ctx.drawImage(img, 0, 0, params.width, params.height);
             initData.imgDownLoadSrc = canvas.toDataURL("image/png", 1.0);
 
         }
@@ -334,9 +338,6 @@
         initData.imgDownLoadSrc = canvas.toDataURL("image/png", 1.0);
     };
 
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
     //移动端注册监听事件
     canvas.addEventListener('touchstart', function (event) {
         event.preventDefault(); // 阻止在canvas画布上签名的时候页面跟着滚动
