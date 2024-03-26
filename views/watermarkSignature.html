@@ -1,0 +1,253 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>水印签名</title>  
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>  
+    <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body #app{
+            height: 100%;
+        }
+        .canvas{
+            border: 1px solid #999;
+        }
+        .footer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn{
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 1px solid #fff;
+            border-radius: 10px;
+        }
+        .btn-clear{
+            color: red;
+            border-color:red;
+            margin-right: 50px;
+        }
+        .btn-submit{
+            color: #164195;
+            border-color:#164195;
+        }
+    </style>
+</head>  
+<body>
+    <div id="app">
+        <canvas ref="signatureCanvas" class="canvas" :width="signatureWidth" :height="signatureHeight"></canvas>
+        <div class="footer" :style="{height: `${footHeight}px`,marginTop: `${footHeight}px`}">
+            <div class="btn btn-clear" @click="clearCanvas">重签</div>
+            <div class="btn btn-submit" @click="save">确认</div>
+        </div>
+    </div>  
+  
+    <script>  
+        new Vue({  
+            el: '#app',
+            data: {  
+                signatureCanvas: null,
+                signatureWidth: 0,
+                signatureHeight: 0,
+                footHeight: 40,
+                ctx: null,
+                isDrawing: false,
+                lastX: 0,
+                lastY: 0,
+                isMobile: false
+            },
+            created(){
+                this.loadScript()
+                this.getSystemInfo()
+            },
+            mounted(){
+                const _this = this
+                _this.isMobile = _this.isMobileFn()
+                _this.signatureCanvas = _this.$refs.signatureCanvas;
+                _this.ctx = _this.signatureCanvas.getContext('2d');
+                _this.ctx.lineGap = 'round';
+				_this.ctx.lineJoin = 'round';
+                _this.ctx.lineWidth = 2;
+                _this.ctx.font = '24px Arial'; 
+                _this.ctx.fillStyle = '#aaa19c';
+
+                if(_this.isMobile){
+                    // Touch events for mobile
+                    _this.signatureCanvas.addEventListener('touchstart', function(e) {
+                        _this.isDrawing = true;
+                        const touch = e.touches[0];
+                        [_this.lastX, _this.lastY] = [touch.offsetX, touch.offsetY];
+                        e.preventDefault();
+                    });
+                    _this.signatureCanvas.addEventListener('touchmove', function(e) {
+                        if (_this.isDrawing) {
+                            const touch = e.touches[0];
+                            _this.draw(touch);
+                            e.preventDefault();
+                        }
+                    });
+                    _this.signatureCanvas.addEventListener('touchend', function(e) {
+                        _this.isDrawing = false;
+                    });
+                } else {
+                    //Mouse events for pc
+                    _this.signatureCanvas.addEventListener('mousedown', function(e) {
+                        _this.isDrawing = true;
+                        [_this.lastX, _this.lastY] = [e.offsetX, e.offsetY];
+                    });
+                    _this.signatureCanvas.addEventListener('mousemove', _this.draw);
+                    _this.signatureCanvas.addEventListener('mouseup', function() {
+                        _this.isDrawing = false;
+                    });
+                }
+
+                window.addEventListener('resize', function(e) {
+                    _this.throttle(_this.getSystemInfo('resize'), 500)
+                    
+                })
+
+                this.addWatermark("Watermark Text", "2024-03-26 10:19:30", this.signatureCanvas, this.ctx)
+            },
+            methods: {  
+                /**
+                 * 添加水印方法
+                 * @param {str} String 签名内容
+                 * @param {str2} String 签名内容
+                 * @param {el} DOM 签名DOM
+                 * @param {elCtx} String 签名绘图环境
+                 * @returns 
+                 */
+                addWatermark(str, str2, el, elCtx){
+                    const width = 220;
+                    const height = 140;
+                    const canvas = Object.assign(document.createElement("canvas"), {
+                        width,
+                        height,
+                    });
+                    
+                    const ctx = canvas.getContext("2d");
+                    ctx.rotate((Math.PI / 120) * -20);
+                    ctx.font = "16px Microsoft Yahei";
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(str, width / 10, height / 1.5);
+                    if(str2)ctx.fillText(str2, width / 10 + 20 , height / 1.5 + 20);
+                    const dataURL = canvas.toDataURL("image/png");
+                    const img = new Image();
+                    img.src = dataURL;
+                    img.onload = function(){
+                        const pattern = elCtx.createPattern(img,"repeat")
+                        elCtx.fillStyle=pattern;
+                        elCtx.fillRect(0,0,el.width, el.height)
+                    }
+                },
+                //绘制签名
+                draw(e) {
+                    if (!this.isDrawing) return;
+                    const x = e.offsetX || e.pageX;
+                    const y = e.offsetY || e.pageY;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.lastX, this.lastY);
+                    this.ctx.lineTo(x, y);
+                    this.ctx.stroke();
+                    [this.lastX, this.lastY] = [x, y];
+                },
+                 // 清除签名
+                clearCanvas() {
+                    this.ctx.clearRect(0, 0, this.signatureCanvas.width, this.signatureCanvas.height);
+                    this.addWatermark("Watermark Text", "2024-03-26 10:19:30", this.signatureCanvas, this.ctx)
+                },
+                //保存
+                save(){
+                    //获取签名
+                    const imgData = this.signatureCanvas.toDataURL('image/png');
+                    this.layerImg(imgData)
+                },
+                // 查看
+                layerImg(imgUrl){
+                    const index = layer.open({
+                        type: 1, // page 层类型
+                        title: '查看签名',
+                        shadeClose: true, // 点击遮罩区域，关闭弹层
+                        maxmin: true, // 允许全屏最小化
+                        anim: 0, // 0-6 的动画形式，-1 不开启
+                        content: '<img src="'+imgUrl+'" style="width: 100%; height:100%;"/>'
+                    });
+
+                    //layer.close(index)
+                },
+                loadScript(){
+                    let jqueryJs = document.createElement('script'),
+                        layerJs = document.createElement('script'),
+                        layerCss = document.createElement('link');
+                        jqueryJs.src = 'https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js'
+                    if(this.isMobileFn()){
+                        layerCss.href = 'https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/mobile/need/layer.min.css'; 
+                        layerCss.rel = 'stylesheet'
+                        layerJs.src = 'https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/mobile/layer.min.js'; 
+                    } else {
+                        layerCss.href = 'https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/theme/default/layer.min.css'; 
+                        layerCss.rel = 'stylesheet'
+                        layerJs.src = 'https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.min.js'; 
+                    }
+
+                    document.head.appendChild(jqueryJs);
+                    document.head.appendChild(layerCss);
+                    setTimeout(()=>{
+                        document.head.appendChild(layerJs);  
+                    },400)
+                    
+                },
+                throttle(fn, wait, immediate){
+                    let timer = null
+                    let callNow = immediate
+                    
+                    return function() {
+                        let context = this,
+                            args = arguments
+
+                        if (callNow) {
+                            fn.apply(context, args)
+                            callNow = false
+                        }
+
+                        if (!timer) {
+                            timer = setTimeout(() => {
+                                fn.apply(context, args)
+                                timer = null
+                            }, wait)
+                        }
+                    }
+                },
+                getSystemInfo(type){
+                    const windowWidth = document.documentElement.clientWidth || document.body.clientWidth;  
+                    const windowHeight = document.documentElement.clientHeight || document.body.clientHeight;  
+                    this.signatureWidth = windowWidth - 2
+                    this.signatureHeight = windowHeight - (this.footHeight * 2) - 60
+                    if(type === 'resize'){
+                        this.clearCanvas()
+                    }
+
+                },
+                // 判断当前环境是否是手机端
+                isMobileFn(){
+                    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                            return true
+                        } else {
+                            return false
+                    }
+                }
+   
+            }
+        })  
+    </script>  
+</body>  
+</html>
