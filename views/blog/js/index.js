@@ -5,33 +5,37 @@ function login(){
     var value = document.getElementById('password').value;
     var ps = window.btoa('CloudEmperor='+ value)
     switch (ps){
-        //CurriculumVitae page
+        // CurriculumVitae Page
         case 'Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ==' : 
             sessionStorage.setItem("CLOUDEMPEROR_TOKEN", "Q2xvdWRFbXBlcm9yPXpoeTU1NDk3MTM3NQ==");
             window.location.href = 'https://cloudemperor.github.io/blog/views/curriculumVitae/index.html'
             break;
-        //Image1 Watermarking page
+        // Image1 Watermarking Page
         case 'Q2xvdWRFbXBlcm9yPWltZw==':
             window.location.href = 'https://cloudemperor.github.io/blog/views/watermarking/index.html'
             break;
-        //Image2 Watermarking page
+        // Image2 Watermarking Page
         case 'Q2xvdWRFbXBlcm9yPWltZzI=':
             window.location.href = 'https://cloudemperor.github.io/blog/views/handDrawingImg/index.html'
             break;
-        // Github Technology blog
+        // Watermark Signature Page
+        case 'Q2xvdWRFbXBlcm9yPWFkbWluMTIzNA==':
+            window.location.href = 'https://cloudemperor.github.io/blog/views/watermarkSignature.html'
+            break;
+        // Github Technology Blog
         case 'Q2xvdWRFbXBlcm9yPWdpdGh1Yg==':
             window.location.href = 'https://github.com/CloudEmperor/blog'
             break;
-        // juejin Technology blog
+        // juejin Technology Blog
         case 'Q2xvdWRFbXBlcm9yPWp1ZWppbg==':
             window.location.href = 'https://juejin.im/user/5b7c1540f265da4355387634'
             break;
-        // CSDN Technology blog
+        // CSDN Technology Blog
         case 'Q2xvdWRFbXBlcm9yPWNzZG4=':
             window.location.href = 'https://me.csdn.net/weixin_38008863'
             break;
         default :
-            alert('口令或者密码错误！！！')
+            alert('密码错误！！！')
     }
     
 }
