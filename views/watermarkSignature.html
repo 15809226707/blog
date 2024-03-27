@@ -76,10 +76,11 @@
                 _this.signatureCanvas = _this.$refs.signatureCanvas;
                 _this.ctx = _this.signatureCanvas.getContext('2d');
                 _this.ctx.lineGap = 'round';
-				_this.ctx.lineJoin = 'round';
+		_this.ctx.lineJoin = 'round';
                 _this.ctx.lineWidth = 2;
                 _this.ctx.font = '24px Arial'; 
-                _this.ctx.fillStyle = '#aaa19c';
+                _this.ctx.fillStyle = '#fff';
+                _this.ctx.fillRect(0, 0, _this.signatureCanvas.width, _this.signatureCanvas.height);
 
                 if(_this.isMobile){
                     // Touch events for mobile
@@ -176,13 +177,18 @@
                 },
                 // 查看
                 layerImg(imgUrl){
+		    const _self = this
                     const index = layer.open({
                         type: 1, // page 层类型
                         title: '查看签名',
                         shadeClose: true, // 点击遮罩区域，关闭弹层
                         maxmin: true, // 允许全屏最小化
                         anim: 0, // 0-6 的动画形式，-1 不开启
-                        content: '<img src="'+imgUrl+'" style="width: 100%; height:100%;"/>'
+                        content: '<img src="'+imgUrl+'" style="width: 100%; height:100%;"/>',
+			btn: ['下载'],
+                        yes: function(index, layero){
+                            _self.imageDwonLoad(imgUrl)
+                        }
                     });
 
                     //layer.close(index)
@@ -239,6 +245,31 @@
                         this.clearCanvas()
                     }
 
+                },
+		/**
+                 * 图片下载
+                 * 
+                 * **/
+                imageDwonLoad (imgDownLoadSrc){
+                    const timestamp = (new Date()).getTime();
+                    //兼容IE
+                    if (window.navigator.msSaveOrOpenBlob) {
+                        const bstr = atob(imgDownLoadSrc.split(',')[1]);
+                        const n = bstr.length;
+                        const u8arr = new Uint8Array(n);
+                        while (n--) {
+                            u8arr[n] = bstr.charCodeAt(n);
+                        }
+                        const blob = new Blob([u8arr]);
+                        window.navigator.msSaveOrOpenBlob(blob, timestamp + '.png');
+                    }else{
+                        //非IE
+                        const a = document.createElement("a");
+                        a.href = imgDownLoadSrc;
+                        a.download = timestamp + '.png';
+                        a.click();
+                    }
+                    
                 },
 		/**
                  * 时间戳转换
