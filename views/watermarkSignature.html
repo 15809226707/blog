@@ -62,7 +62,8 @@
                 isDrawing: false,
                 lastX: 0,
                 lastY: 0,
-                isMobile: false
+                isMobile: false,
+		currentDate: ''
             },
             created(){
                 this.loadScript()
@@ -71,6 +72,7 @@
             mounted(){
                 const _this = this
                 _this.isMobile = _this.isMobileFn()
+		_this.currentDate = this.formatDate(new Date(), "yyyy-MM-dd  hh: mm : ss")
                 _this.signatureCanvas = _this.$refs.signatureCanvas;
                 _this.ctx = _this.signatureCanvas.getContext('2d');
                 _this.ctx.lineGap = 'round';
@@ -114,7 +116,7 @@
                     
                 })
 
-                this.addWatermark("Watermark Text", "2024-03-26 10:19:30", this.signatureCanvas, this.ctx)
+                this.addWatermark("Watermark Text", this.currentDate, this.signatureCanvas, this.ctx)
             },
             methods: {  
                 /**
@@ -164,7 +166,7 @@
                  // 清除签名
                 clearCanvas() {
                     this.ctx.clearRect(0, 0, this.signatureCanvas.width, this.signatureCanvas.height);
-                    this.addWatermark("Watermark Text", "2024-03-26 10:19:30", this.signatureCanvas, this.ctx)
+                    this.addWatermark("Watermark Text", this.currentDate, this.signatureCanvas, this.ctx)
                 },
                 //保存
                 save(){
@@ -237,6 +239,41 @@
                         this.clearCanvas()
                     }
 
+                },
+		/**
+                 * 时间戳转换
+                 * 
+                 * @param {Number} date 时间戳
+                 * @param {String} fmt  时间显示格式，例如 yyyy-MM-dd HH:mm:ss
+                 * @return {String} fmt 返回转换后的时间 ，formatDate(value, "yyyy-MM-dd  hh: mm : ss")
+                 * 
+                 */
+                formatDate(date, fmt){
+                    date = new Date(date);
+                    if (isNaN(date.getDate())) return date;
+                    if (/(y+)/.test(fmt)) {
+                        fmt = fmt.replace(
+                        RegExp.$1,
+                        (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+                        );
+                    }
+                    let o = {
+                        "M+": date.getMonth() + 1,
+                        "d+": date.getDate(),
+                        "h+": date.getHours(),
+                        "m+": date.getMinutes(),
+                        "s+": date.getSeconds()
+                    };
+                    for (let k in o) {
+                        if (new RegExp(`(${k})`).test(fmt)) {
+                        let str = o[k] + "";
+                        fmt = fmt.replace(
+                            RegExp.$1,
+                            RegExp.$1.length === 1 ? str : ("00" + str).substr(str.length)
+                        );
+                        }
+                    }
+                    return fmt;
                 },
                 // 判断当前环境是否是手机端
                 isMobileFn(){
